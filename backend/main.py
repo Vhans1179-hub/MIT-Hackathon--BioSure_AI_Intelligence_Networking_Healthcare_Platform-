@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.config import settings
 from backend.database import database
-from backend.routers import patients, hcos, contracts
+from backend.routers import patients, hcos, contracts, eligibility
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,6 +53,7 @@ app.add_middleware(
 app.include_router(patients.router)
 app.include_router(hcos.router)
 app.include_router(contracts.router)
+app.include_router(eligibility.router, prefix="/api/v1")
 
 
 @app.get("/healthz")
