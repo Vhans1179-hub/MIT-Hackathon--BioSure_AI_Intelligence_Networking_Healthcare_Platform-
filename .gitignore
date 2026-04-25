@@ -44,3 +44,6 @@ Thumbs.db
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Local scratchpad / staging area for downloaded assets before placement
+docs/
