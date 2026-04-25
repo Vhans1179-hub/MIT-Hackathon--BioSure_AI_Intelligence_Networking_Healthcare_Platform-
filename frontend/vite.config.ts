@@ -6,6 +6,14 @@ export default defineConfig(() => ({
   server: {
     host: "::",
     port: 5137,
+    proxy: {
+      // Forward API calls to the FastAPI backend so components that fetch
+      // relative paths (e.g. EligibilityDrawer) reach the backend in dev.
+      "/api": {
+        target: process.env.VITE_DEV_PROXY_TARGET || "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     host: "::",

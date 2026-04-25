@@ -88,7 +88,7 @@ interface StateTransition {
 // Mock data
 // ---------------------------------------------------------------------------
 
-const USE_MOCK = true; // ← set false once /api/v1/eligibility/* is live
+const USE_MOCK = false; // /api/v1/eligibility/* is live; switch to true for offline UI work
 
 // MM-001: clean ELIGIBLE, single evaluation
 const MOCK_CURRENT_DEFAULT: EligibilityResponse = {
