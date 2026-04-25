@@ -1,0 +1,381 @@
+{
+  "dataset": "CAR-T Eligibility Demo Patients (Synthetic)",
+  "generated": "2026-04-24",
+  "disclaimer": "All patients, names, MRNs, dates, and clinical details are synthetic. No real PHI. Created for hackathon demonstration only.",
+  "target_criteria": {
+    "indication": "Relapsed/refractory large B-cell lymphoma (2L+ CD19 CAR-T eligibility)",
+    "inclusion": [
+      "Age >= 18",
+      "Histologically confirmed LBCL (DLBCL NOS, HGBCL, transformed FL, T-cell/histiocyte-rich LBCL, PMBCL)",
+      "Relapsed or refractory after >=1 prior line containing anti-CD20 mAb + anthracycline",
+      "ECOG performance status 0-1",
+      "ANC >= 1.0 x10^9/L, platelets >= 75 x10^9/L, Hgb >= 8 g/dL",
+      "Creatinine clearance >= 60 mL/min or Cr <= 1.5x ULN",
+      "Total bilirubin <= 1.5 mg/dL, ALT/AST <= 2.5x ULN",
+      "LVEF >= 45%"
+    ],
+    "exclusion": [
+      "CNS involvement by lymphoma (primary or secondary)",
+      "Prior CD19-directed therapy or prior CAR-T",
+      "Prior allogeneic stem cell transplant (autologous SCT allowed)",
+      "Active HIV, HBV, or HCV requiring treatment",
+      "Active autoimmune disease requiring systemic immunosuppression (personal history, not family)",
+      "Uncontrolled active infection",
+      "Richter's transformation from CLL",
+      "Other active malignancy within 2 years"
+    ]
+  },
+  "patients": [
+    {
+      "patient_id": "PT-001",
+      "demographics": {"age": 62, "sex": "M", "mrn": "SYN-4471208"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "Classic 2L CAR-T candidate. Histologically confirmed DLBCL GCB subtype, primary refractory to R-CHOP x6 (1 prior line with anti-CD20 + anthracycline), ECOG 1, labs within criteria, no exclusions.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-09-14",
+          "author": "S. Chen, MD — Hematopathology",
+          "content": "SPECIMEN: R cervical LN, excisional bx\n\nCLIN HX: 62M w/ enlarging neck mass x 6 wks, B-sx. r/o lymphoma.\n\nGROSS: 3.2 x 2.1 x 1.8 cm tan-pink fibrofatty tissue, partially effaced by firm tumor.\n\nMICRO: Nodal architecture effaced by diffuse proliferation of large atypical lymphoid cells w/ vesicular nuclei, prominent nucleoli, and moderate basophilic cytoplasm. High mitotic rate. Focal starry-sky pattern absent.\n\nIHC: CD20+, CD79a+, PAX5+, BCL6+, CD10+, MUM1-, BCL2+ (weak), MYC+ ~30%, Ki-67 ~75%. CD3-, CD5-, cyclin D1-.\n\nFISH: MYC rearrangement NEGATIVE. BCL2 rearrangement NEGATIVE. BCL6 rearrangement NEGATIVE.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, GERMINAL CENTER B-CELL TYPE (HANS algorithm). Not high-grade B-cell lymphoma. Ki-67 ~75%."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-02-11",
+          "author": "M. Rodriguez, MD — Heme/Onc",
+          "content": "62M w/ DLBCL GCB dx 9/2025, s/p R-CHOP x6 completed 1/2026 w/ interim PET Deauville 4 after cycle 4. End-of-tx PET: Deauville 5, new L axillary nodes + R hilar uptake. Biopsy of L axillary node 2/2/26 c/w recurrent DLBCL.\n\nPt refractory to 1L tx. Feels reasonably well, some fatigue, no fevers/night sweats in last wk. Eating OK, wt stable. ECOG 1 (ambulatory, ambulating w/o assist, does own ADLs, cut back on golf).\n\nPMH: HTN (lisinopril), hyperlipidemia (atorva). No DM. No h/o CVA/MI. NKDA.\n\nROS: neg for HA, visual changes, focal weakness, confusion. No active infxn. No rash or joint sx.\n\nLabs 2/10/26: WBC 5.4, ANC 3.2, Hgb 11.8, Plt 168. Cr 0.9 (eGFR >90). Tbili 0.6, ALT 28, AST 31. LDH 312 (mildly elevated). HBV/HCV/HIV neg (3/2025).\n\nEcho 2/8/26: LVEF 58%, no wall motion abn.\n\nA/P: 62M w/ r/r DLBCL after 1L R-CHOP, primary refractory disease. Candidate for 2L CAR-T (axi-cel vs liso-cel). Will refer to cell therapy team. No CNS sx, will obtain MRI brain to r/o occult CNS dz prior to apheresis."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-02-11",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX HX:\n- 10/2025 to 1/2026: R-CHOP x6 cycles (rituximab 375 mg/m2, cyclophosphamide 750 mg/m2, doxorubicin 50 mg/m2, vincristine 1.4 mg/m2, prednisone 100 mg PO d1-5). Interim PET c4: Deauville 4. EOT PET: Deauville 5 — progressive disease.\n- No other prior cancer therapy.\n- No prior radiation.\n- No prior SCT.\n\nPRIOR CANCER DX: none."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-002",
+      "demographics": {"age": 54, "sex": "F", "mrn": "SYN-9923514"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "DLBCL non-GCB, primary refractory to R-CHOP. Young, ECOG 0, labs clean, no exclusions.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-11-03",
+          "author": "A. Patel, MD — Surgical Pathology",
+          "content": "SPECIMEN: core needle bx, retroperitoneal mass\n\nCLIN: 54F w/ abd pain, CT: 8cm RP mass + mesenteric LAD.\n\nMICRO: sheets of large atypical B cells, high N/C ratio, pleomorphic nuclei. Areas of necrosis. Brisk mitotic activity.\n\nIHC: CD20+, CD79a+, MUM1+, BCL6+ (weak), CD10-, BCL2+, MYC+ ~40%. Ki-67 85-90%. EBER negative. Cyclin D1 neg.\n\nFISH: MYC, BCL2, BCL6 — no rearrangements detected.\n\nDX: DLBCL, NON-GCB SUBTYPE (activated B-cell type by Hans algo). Not high-grade per 2017 WHO criteria."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-22",
+          "author": "J. Okafor, MD",
+          "content": "54F DLBCL non-GCB, dx 11/3/25. Started R-CHOP 11/20/25. After C3, PET showed partial response (Deauville 4). Pt remained sx'ic w/ persistent abd pain and new R inguinal LAD by C5. Bx R inguinal node 3/10/26 showed persistent/refractory DLBCL.\n\nStopped R-CHOP after C5 given clinical progression. Discussed w/ pt: primary refractory disease, 2L options.\n\nOverall doing remarkably well. Runs 3x/wk, working full-time as paralegal. ECOG 0.\n\nPMH: none significant. G2P2. NKDA. No h/o autoimmune. Flu shot 10/25.\n\nLabs 3/20: WBC 6.1, ANC 4.1, Hgb 12.4, Plt 221. Cr 0.7 (GFR >90). LFTs WNL, tbili 0.4. LDH 286 (WNL). Calcium/phos normal.\n\nHep panel 3/18: HBsAg neg, HBsAb +, HBcAb neg. HCV Ab neg. HIV neg.\n\nEcho: EF 62%.\n\nA/P: Primary refractory DLBCL, candidate for CAR-T 2L. Referral placed to transplant/cell therapy. MRI brain pending."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-22",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX HX:\n- 11/20/2025 - 2/28/2026: R-CHOP x5 cycles (stopped early due to progression on imaging + clinical sx). Best response: PR after C3, PD by C5.\n- No other prior systemic therapy.\n- No prior RT.\n- No prior SCT.\n\nPRIOR CANCERS: none."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-003",
+      "demographics": {"age": 68, "sex": "M", "mrn": "SYN-1127834"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "High-grade B-cell lymphoma with MYC and BCL2 rearrangements (double-hit). HGBCL is explicitly eligible for CD19 CAR-T. Primary refractory to R-EPOCH (anti-CD20 + anthracycline). Labs at edge of normal but acceptable.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-12-08",
+          "author": "R. Goldstein, MD — Hematopathology",
+          "content": "SPECIMEN: Bone marrow + LN bx (submandibular)\n\nMICRO (LN): Effacement by medium-large atypical lymphoid cells with round nuclei, fine chromatin, and prominent nucleoli. Starry-sky pattern present. Extremely high mitotic rate.\n\nIHC: CD20+ CD10+ BCL6+ BCL2+ (STRONG, diffuse) MYC+ (>40% cells). Ki-67 ~95%. TdT negative.\n\nCYTOGENETICS (LN, FISH panel):\n- MYC rearrangement: POSITIVE (t(8;14) most likely)\n- BCL2 rearrangement: POSITIVE\n- BCL6 rearrangement: negative\n\nBM: 30% involvement by same population.\n\nDX: HIGH-GRADE B-CELL LYMPHOMA WITH MYC AND BCL2 REARRANGEMENTS (double-hit lymphoma per 2017 WHO). Stage IV (BM involvement)."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-04-03",
+          "author": "L. Tanaka, MD",
+          "content": "68M w/ HGBCL double-hit (MYC+/BCL2+), dx 12/2025. Started DA-R-EPOCH given high-grade features. Completed 6 cycles as of 3/28/26. Interim PET after C4 showed Deauville 3 (CR). EOT PET 4/1/26: new FDG-avid L iliac LN + splenic focus. Biopsy L iliac LN 4/2/26: persistent HGBCL, same phenotype.\n\nAssessment: primary refractory / very early relapse HGBCL after 1L.\n\nPt tolerated R-EPOCH ok, some neuropathy G1-2, resolved. Now ECOG 1 (a bit deconditioned but ambulating, self-care intact, back to driving).\n\nPMH: a-fib on apixaban (held during chemo, restarted), OSA on CPAP, old MI 2018 w/ DES to LAD. Last echo 3/20/26 EF 48%.\n\nLabs 4/2/26: WBC 3.9 ANC 1.4 Hgb 10.2 Plt 89. Cr 1.1, CrCl est 68. Tbili 0.8 ALT 42 AST 38. LDH 520 elevated.\n\nA/P: r/r HGBCL double-hit, consider CAR-T. EF borderline at 48% — will discuss w/ cardio-onc. ANC/plt within cutoffs for CAR-T. Aggressive disease, needs expeditious evaluation."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-04-03",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 12/15/2025 to 3/28/2026: DA-R-EPOCH x6 (dose-adjusted, max level 3). Rituximab 375 + etoposide + prednisone + vincristine + cyclophosphamide + doxorubicin. Interim PET C4 D3 (CR). EOT PET: progressive dz.\n- IT MTX prophylaxis x4 given double-hit disease.\n- No prior systemic tx for lymphoma.\n- No prior SCT.\n\nOTHER: STEMI 2018, PCI w/ DES. No prior malignancy."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-004",
+      "demographics": {"age": 71, "sex": "F", "mrn": "SYN-6642093"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "Transformed follicular lymphoma to DLBCL — explicitly eligible CAR-T indication. Two prior lines of therapy for lymphoma, second (R-CHOP for transformed disease) refractory.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-08-19",
+          "author": "D. Ramachandran, MD — Surg Path",
+          "content": "SPECIMEN: excisional bx, L axillary LN (rapid enlargement)\n\nCLIN HX: 71F w/ known grade 1-2 FL dx 2021, in surveillance. Rapid growth L axilla over 4 wks, LDH 680 (baseline ~200). r/o transformation.\n\nMICRO: Architecture effaced. Residual follicular pattern focally present w/ sheets of large centroblast-like cells occupying interfollicular areas and coalescing. Transformation.\n\nIHC: CD20+ CD10+ BCL6+ BCL2+ MUM1- (focal+). Ki-67 ~70% in large cell areas, ~20% in residual follicular areas.\n\nFISH: BCL2 rearrangement POSITIVE (t(14;18), consistent w/ prior FL). MYC neg. BCL6 neg.\n\nDX: TRANSFORMED FOLLICULAR LYMPHOMA TO DIFFUSE LARGE B-CELL LYMPHOMA. Residual grade 1-2 FL w/ areas of DLBCL transformation."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-28",
+          "author": "P. Mehta, MD",
+          "content": "71F w/ tFL --> DLBCL. H/o: orig FL dx 2021, treated w/ BR (bendamustine-rituximab) x6 in 2021-2022 --> CR. Surveillance until 8/2025 when transformed to DLBCL (see path 8/19/25).\n\nFor transformed dz: received R-CHOP x6 10/2025 - 2/2026. Interim PET C3: PR (Deauville 4). EOT PET 2/22/26: new uptake cervical + mediastinal nodes, Deauville 5. Bx confirmed persistent DLBCL.\n\nECOG 1. Pt lives alone, drives, independent w/ ADLs. Plays bridge 2x/wk. Some fatigue last 2 wks.\n\nPMH: osteoporosis (Fosamax), HTN (amlodipine), cataract s/p bilat repair. No autoimmune. No CAD.\n\nLabs: WBC 4.2 ANC 2.1 Hgb 11.1 Plt 142. Cr 1.0 CrCl 64. LFTs WNL. LDH 410.\n\nHep/HIV serologies neg 10/25.\n\nA/P: tFL w/ r/r DLBCL component, 2 prior lines (BR for FL, R-CHOP for transformed). CAR-T candidate. Refer."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-28",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX HX:\n- 2021 dx: grade 1-2 follicular lymphoma, stage III\n- 9/2021 - 3/2022: bendamustine + rituximab x6 cycles. CR achieved. [LINE 1]\n- 8/2025: transformation to DLBCL dx\n- 10/14/2025 - 2/2/2026: R-CHOP x6 cycles. Best response PR by C3, PD at EOT. [LINE 2]\n- No RT, no SCT, no targeted tx.\n\nPRIOR CANCER: FL (same disease lineage, transformed)."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-005",
+      "demographics": {"age": 70, "sex": "M", "mrn": "SYN-3308851"},
+      "expected_label": "INELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "Chronic lymphocytic leukemia, not large B-cell lymphoma. Not eligible for DLBCL-targeted CAR-T trials. CLL has separate CAR-T trials but different product/criteria.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2024-05-02",
+          "author": "K. Nguyen, MD",
+          "content": "SPECIMEN: Peripheral blood + BM aspirate/bx\n\nCLIN: 70M w/ lymphocytosis found on routine CBC (WBC 48, ALC 38), painless cervical LAD.\n\nFLOW (PB): CD5+ CD19+ CD20 dim+ CD23+ kappa restricted monoclonal B cells, 85% of lymphocytes. Matutes score 4-5.\n\nBM: 60% involvement by small mature B cells w/ CLL/SLL immunophenotype.\n\nFISH: del(13q) isolated. No del(17p), no del(11q), no trisomy 12.\n\nIGHV: mutated.\n\nDX: CHRONIC LYMPHOCYTIC LEUKEMIA / SMALL LYMPHOCYTIC LYMPHOMA, favorable cytogenetics. Rai stage II."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-02-18",
+          "author": "J. Okafor, MD",
+          "content": "70M w/ CLL dx 5/2024, initially observation. Progressive LAD + sx (fatigue, NS) started 9/2025. Initiated acalabrutinib 100 mg BID 10/5/25. Tolerating well, ALC declining, LAD shrinking on exam and CT.\n\nCurrently on cycle 7 of acala. Partial response per iwCLL criteria. No transformation sx.\n\nECOG 0-1, feels well. No fevers. Plays tennis.\n\nPMH: HTN, BPH.\n\nLabs 2/15/26: WBC 18 (down from baseline 48) ALC 11, Hgb 13.8 Plt 178. Cr 1.0. LFTs WNL.\n\nA/P: CLL responding to acalabrutinib monotherapy. Continue. Next imaging in 3 mo. No evidence of Richter's transformation."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-02-18",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 5/2024: CLL diagnosis (Rai stage II, mutated IGHV, 13q-)\n- 5/2024 - 9/2025: observation\n- 10/5/2025 - present: acalabrutinib 100 mg PO BID, ongoing. Best response: PR.\n- No chemoimmunotherapy (no FCR, no BR). No anti-CD20 mAb given.\n- No anthracycline exposure.\n- No SCT.\n\nDX: CLL/SLL only. No DLBCL. No Richter's."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-006",
+      "demographics": {"age": 52, "sex": "F", "mrn": "SYN-7705129"},
+      "expected_label": "INELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "DLBCL with confirmed CNS involvement by LP cytology + MRI — explicit exclusion criterion for standard CD19 CAR-T protocols. (Separate trials for secondary CNS lymphoma exist but are not standard ZUMA-7/TRANSFORM eligibility.)",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-10-30",
+          "author": "M. Abramowitz, MD",
+          "content": "SPECIMEN: R cervical LN bx + CSF cytology (2 taps)\n\nLN MICRO: diffuse large B cell lymphoma, GCB type. CD20+ CD10+ BCL6+ BCL2+. Ki-67 80%. FISH neg for MYC/BCL2/BCL6 rearrangements.\n\nCSF (10/28/25, 10/29/25): BOTH SAMPLES POSITIVE for malignant large B cells. Flow cytometry: CD20+ kappa-restricted B cell population, ~15% of lymphocytes. Total protein elevated 112 mg/dL. Glucose 42.\n\nMRI BRAIN W/ CONTRAST: 1.4 cm enhancing lesion R frontal lobe + leptomeningeal enhancement along R parietal sulci.\n\nDX: DLBCL, GCB type, WITH CNS INVOLVEMENT (leptomeningeal disease + parenchymal lesion on MRI, positive CSF cytology)."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-01-15",
+          "author": "R. Singh, MD",
+          "content": "52F w/ DLBCL + secondary CNS involvement dx 10/2025. Aggressive presentation w/ HA, R arm weakness, eventually found to have parenchymal + leptomeningeal dz.\n\nStarted MATRix-type regimen (high-dose MTX + cytarabine + rituximab + thiotepa) + intrathecal MTX. C1-C3 complete. Interim MRI: shrinkage of parenchymal lesion, CSF cleared after C2. Neurologic sx improving.\n\nPt deteriorated after C3 — new L arm weakness, repeat MRI 1/10/26 shows new ring-enhancing lesion L frontal lobe + reaccumulation of R lesion. Progressive CNS dz.\n\nECOG currently 2 (up from 1). Uses walker intermittently. Husband assists w/ some IADLs.\n\nLabs adequate.\n\nA/P: refractory CNS+ DLBCL. Standard CAR-T protocols exclude active CNS dz. Discuss expanded access / clinical trial options for CNS-positive population. Consider ibrutinib-based salvage. Palliative care consult placed."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-01-15",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 11/5/2025 - 1/8/2026: MATRix protocol x3 cycles (high-dose MTX + cytarabine + rituximab + thiotepa), plus IT MTX x6\n- No prior systemic therapy before MATRix (diagnosed w/ CNS disease at presentation)\n- No prior SCT\n\nACTIVE CNS LYMPHOMA: YES. Parenchymal + leptomeningeal + positive CSF cytology."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-007",
+      "demographics": {"age": 58, "sex": "M", "mrn": "SYN-2215709"},
+      "expected_label": "INELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "DLBCL would otherwise qualify, BUT uncontrolled HIV (detectable VL, non-adherent to ART) is an exclusion. If VL were undetectable and CD4 adequate on stable ART, patient could be eligible — but here infection is not controlled.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-12-14",
+          "author": "A. Patel, MD",
+          "content": "SPECIMEN: R inguinal LN core bx\n\nMICRO: Large atypical lymphoid cells in sheets. Pleomorphic. Necrosis present.\n\nIHC: CD20+ CD79a+ MUM1+ BCL6 weak+ CD10-. BCL2+. MYC ~30%. EBER POSITIVE (consistent w/ EBV-associated DLBCL, often seen in immunocompromised).\n\nFISH: no MYC/BCL2/BCL6 rearrangements.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, NON-GCB TYPE, EBV+. Clinical correlation w/ HIV status recommended."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-05",
+          "author": "L. Tanaka, MD",
+          "content": "58M HIV+ since 2011. Known h/o poor adherence to ART, multiple gaps. On bictegravir/FTC/TAF per records but admits he stopped taking it ~8 mo ago 'didn't feel I needed it.' Restarted after DLBCL dx 12/2025 but intermittent.\n\nLast CD4 2/20/26: 142. HIV VL 2/20/26: 18,400 copies/mL. Previously undetectable in 2022.\n\nDLBCL: received R-EPOCH x4 cycles 1/2026 - 3/2026 (held C5 due to neutropenia + intercurrent pneumonia). Interim PET after C4: mixed response, new lesions in spleen. r/r disease.\n\nECOG 2 — deconditioned, lost 22 lbs. Reports depression, housing instability. Homeless shelter x3 mo.\n\nPt motivated for further tx but social situation complex. ID consulted for ART optimization. Chest CT shows old granulomas, new RLL infiltrate — awaiting cx.\n\nA/P: r/r EBV+ DLBCL in setting of uncontrolled HIV (VL 18K, CD4 142) and suspected pulmonary infection. NOT currently a CAR-T candidate due to active uncontrolled viral infection + active pulmonary infection. Social work engaged. Need to stabilize HIV (suppress VL, CD4 recovery), clear infection, improve PS before reconsidering cell therapy."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-05",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 1/8/2026 - 3/1/2026: R-EPOCH x4 (cycle 5 held). Mixed response, new spleen lesions.\n\nHIV TX:\n- 2011: HIV dx. Intermittent ART over years w/ poor adherence.\n- Current: bictegravir/emtricitabine/TAF (intermittent)\n- 2/2026 labs: CD4 142, VL 18,400 (DETECTABLE, uncontrolled)\n\nACTIVE INFECTIONS: suspected pneumonia (workup pending), HIV uncontrolled."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-008",
+      "demographics": {"age": 65, "sex": "M", "mrn": "SYN-4457720"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — unstructured extraction. Problem list and billing codes say 'lymphoma, unspecified' (C85.90). The specific DLBCL diagnosis only exists in the pathology report narrative. A structured-data-only tool would miss this. The agent must read the path report text to correctly identify DLBCL and thus CAR-T eligibility.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2024-06-21",
+          "author": "S. Chen, MD — Hematopathology",
+          "content": "SPECIMEN: L inguinal LN, excisional.\n\nCLIN HX: 65M w/ LAD.\n\nGROSS: 2.4 cm tan nodular tissue.\n\nMICRO: Nodal architecture effaced by sheets of large atypical lymphoid cells w/ vesicular chromatin, variably prominent nucleoli, scant cytoplasm. Frequent mitoses. Focal necrosis.\n\nIHC: CD20 strongly positive (diffuse). CD3-. CD5-. PAX5+. CD10+. BCL6+. MUM1-. BCL2 focal weak+. MYC ~20%. Ki-67 ~65%. Cyclin D1-. TdT-. EBER-.\n\nFISH: MYC-. BCL2-. BCL6-.\n\nCOMMENT: The morphologic and immunophenotypic findings support the diagnosis below. Classified as germinal center B-cell type by Hans algorithm. Not high-grade B-cell lymphoma.\n\nDIAGNOSIS: DIFFUSE LARGE B-CELL LYMPHOMA, NOT OTHERWISE SPECIFIED, GERMINAL CENTER B-CELL (GCB) TYPE."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-02-09",
+          "author": "J. Okafor, MD",
+          "content": "[PROBLEM LIST (from EHR)]\n- Lymphoma, unspecified (C85.90) — active\n- Essential hypertension (I10) — active\n- Hyperlipidemia (E78.5) — active\n\n[NOTE]\n65M s/p 1L chemo in 2024, now w/ recurrent dz. Records transferred from outside system (Mercy West), some documentation incomplete. Old path report from 6/2024 reviewed (see scanned doc). Received R-CHOP x6 per pt and external records 7/24 - 12/24 --> CR by EOT PET. Relapsed 10/2025, new L cervical + mesenteric LAD, bx 11/2/25 c/w recurrent lymphoma (same phenotype).\n\nPt overall well. ECOG 1. Works part-time as accountant. Walks daily. No infections. No B sx currently.\n\nPMH: HTN, HLD.\n\nLabs 2/7/26: WBC 5.8, ANC 3.4, Hgb 12.2, Plt 192. Cr 1.0. LFTs WNL. LDH 340 mildly elevated.\n\nEcho 1/30: EF 60%.\n\nHep/HIV neg 11/25.\n\nA/P: r/r lymphoma s/p 1L R-CHOP. Candidate for CAR-T. Will refer to cell therapy."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-02-09",
+          "author": "auto-generated from EHR",
+          "content": "DX CODES BILLED:\n- C85.90 (Non-Hodgkin lymphoma, unspecified, unspecified site)\n\nCANCER TX:\n- 7/2024 - 12/2024: R-CHOP x6 cycles (external records, Mercy West)\n- 11/2025: bx confirmed relapse\n- No other cancer therapy\n\nNOTES: outside records include pathology report from 6/21/24 showing specific histology — see attached scan. Internal coding did not update to specific histology."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-009",
+      "demographics": {"age": 59, "sex": "F", "mrn": "SYN-8814209"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — prior lines extraction from free text. Progress note says patient 'received rituximab plus CHOP chemotherapy six cycles in 2023, then bendamustine with rituximab for four cycles after relapse.' The agent must (a) recognize 'rituximab + CHOP' = R-CHOP as a line, (b) recognize 'bendamustine with rituximab' = BR as a 2nd line, and (c) count correctly. Structured data column reads '(see notes)' — no structured tx data available. Eligible as r/r DLBCL after 2 prior lines.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2023-02-14",
+          "author": "D. Ramachandran, MD",
+          "content": "SPECIMEN: R supraclav LN, excisional.\n\nMICRO: sheets of large B cells replacing nodal architecture. Large vesicular nuclei. Ki-67 ~70%.\n\nIHC: CD20+ CD10- BCL6+ MUM1+ BCL2+ MYC ~30%. Non-GCB by Hans.\n\nFISH: MYC/BCL2/BCL6 no rearrangements.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, NON-GCB TYPE, NOS."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-01-28",
+          "author": "P. Mehta, MD — Heme/Onc",
+          "content": "New pt visit — transferred from community onc (Dr Hartwell, retired).\n\n59F w/ DLBCL dx 2/2023. Here for re-evaluation in setting of 3rd relapse.\n\nTREATMENT HISTORY per pt and available notes (structured tx data not transferred over — see narrative):\n\nInitial tx: received rituximab plus CHOP chemotherapy six cycles spring/summer 2023 achieving complete remission. Followed approx 18 months until late 2024 when she noted new L axillary lump. Bx 11/2024 at outside hosp showed recurrent DLBCL same phenotype. At that time given bendamustine with rituximab for four cycles through 3/2025. Initial shrinkage but by cycle 4 mixed response, stopped tx.\n\nReferred to our institution 4/2025, we planned autoSCT approach but pt declined given family situation (husband illness). Entered into observation — understanding this was not standard.\n\n11/2025 progressive symptoms: new R groin mass + fatigue. Bx 12/1/25 at our path — persistent DLBCL.\n\nPt has declined aggressive salvage previously. Now ready to pursue tx given disease progression. Husband deceased 6/2025.\n\nECOG 1. Self-care intact. Drives.\n\nPMH: hypothyroid on levo, osteoarthritis.\n\nLabs 1/26/26: WBC 4.4 ANC 2.2 Hgb 10.8 Plt 112. Cr 0.9 CrCl 78. LFTs WNL. LDH 290.\n\nA/P: r/r DLBCL, multiply pretreated (see tx hx above). Discussed CAR-T at length, pt interested. Will initiate workup."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-01-28",
+          "author": "auto-generated from EHR",
+          "content": "STRUCTURED ONCOLOGY TREATMENT LOG:\n[DATA NOT AVAILABLE — PATIENT TRANSFERRED FROM COMMUNITY PRACTICE, STRUCTURED ORDERS NOT IMPORTED]\n\nSEE CLINICAL NOTES FOR TX HISTORY.\n\nRADIATION HX: none per pt.\nSCT HX: none.\nOTHER CANCER: none."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-010",
+      "demographics": {"age": 58, "sex": "M", "mrn": "SYN-6677140"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — family history confusion. Note mentions 'daughter w/ SLE on hydroxychloroquine' and 'mother h/o autoimmune hepatitis.' These are family members, not the patient. Agent must NOT flag patient for autoimmune exclusion. The patient himself has no autoimmune disease.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-07-11",
+          "author": "K. Nguyen, MD",
+          "content": "SPECIMEN: R retroperitoneal mass, core bx\n\nMICRO: diffuse sheets large B cells, high mitotic rate.\n\nIHC: CD20+ CD10+ BCL6+ BCL2 weak+ Ki-67 75%. MYC 25%. GCB by Hans.\n\nFISH: MYC-, BCL2-, BCL6-.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, GCB TYPE, NOS."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-18",
+          "author": "M. Rodriguez, MD",
+          "content": "58M DLBCL GCB dx 7/2025. Received R-CHOP x6 7/25 - 12/25. EOT PET Deauville 4 (residual FDG avidity retroperitoneum). Bx 1/10/26 showed persistent DLBCL. Primary refractory / partial responder.\n\nPt otherwise in good health. Works as civil engineer. Runs 10-15 miles/wk before dx, cut back during tx but resumed. ECOG 1, maybe 0.\n\nPMH: hyperlipidemia (rosuvastatin), BPH (tamsulosin). No DM. No h/o infxn. No autoimmune dz, no joint sx, no rashes, no chronic steroid use. NKDA.\n\nFH: notable — daughter age 28 w/ SLE dx 2019, currently on hydroxychloroquine and low-dose prednisone. Mother deceased age 71 (2018) from complications of autoimmune hepatitis. Father deceased (MI age 78). No known family h/o malignancy.\n\nSH: married, 2 adult children. Non-smoker. Occasional wine.\n\nROS: neg systematic review. No chronic joint pain, no dry eyes/mouth, no rashes. No Raynaud's.\n\nLabs 3/16/26: WBC 5.1 ANC 2.8 Hgb 12.9 Plt 198. Cr 0.9 CrCl >90. LFTs all WNL, tbili 0.5. LDH 295. ANA neg (2024, screening). dsDNA not sent.\n\nHep/HIV neg 7/25.\n\nEcho 3/10: EF 63%.\n\nA/P: r/r DLBCL after 1L R-CHOP. Candidate for CAR-T 2L. No personal h/o autoimmune disease (notable FH in first-degree relatives). Proceed w/ cell therapy referral."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-18",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 7/28/2025 - 12/5/2025: R-CHOP x6. Best response: PR at EOT.\n- No prior RT, no prior SCT, no other systemic tx.\n\nAUTOIMMUNE HX (PATIENT): none documented. ANA neg 2024.\nFAMILY HX autoimmune: daughter SLE, mother autoimmune hepatitis (deceased)."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-011",
+      "demographics": {"age": 64, "sex": "M", "mrn": "SYN-5581034"},
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — auto vs allo SCT distinction. Patient had prior AUTOLOGOUS SCT, which is permitted. Many systems conflate 'SCT' or 'stem cell transplant' as blanket exclusions. Prior allogeneic SCT is the actual exclusion. Agent must distinguish these.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2022-04-08",
+          "author": "A. Patel, MD",
+          "content": "SPECIMEN: L cervical LN, excisional\n\nMICRO: DLBCL, GCB subtype. Ki-67 75%. MYC/BCL2/BCL6 FISH negative.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, GCB TYPE, NOS."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-04-05",
+          "author": "R. Singh, MD",
+          "content": "64M DLBCL GCB dx 4/2022.\n\nTX HX:\n- 4/2022 - 9/2022: R-CHOP x6 --> PR\n- 10/2022: bx confirmed residual dz\n- 11/2022 - 1/2023: R-ICE x3 (salvage) --> CR\n- 2/2023: AUTOLOGOUS STEM CELL TRANSPLANT (BEAM conditioning) at our center. Dr. Liu was primary. Engraftment d+11 neutrophils, d+14 platelets. Uncomplicated course.\n- Post-SCT CR maintained through 2024.\n- 1/2026: new FDG-avid lesions R axillary + mesenteric on routine surveillance PET. Bx 1/20/26 confirmed recurrent DLBCL, same phenotype.\n\nNow: r/r DLBCL 3L setting (prior R-CHOP, R-ICE/autoSCT counts as consolidation of 2L).\n\nECOG 1. Doing well day to day. Retired teacher, active, gardens.\n\nPMH: dx HTN (lisinopril), prior HSV-1 reactivation during autoSCT (resolved, on prophylactic acyclovir).\n\nLabs 4/3/26: WBC 4.8 ANC 2.6 Hgb 11.5 Plt 134. Cr 1.1 CrCl 72. LFTs WNL. LDH 380.\n\nHep/HIV neg 1/26.\n\nEcho 3/25/26: EF 55%.\n\nA/P: multiply r/r DLBCL s/p autoSCT, now relapsed. Ideal CAR-T candidate. Note — prior transplant was AUTOLOGOUS (self), not allogeneic. No donor involvement. CAR-T remains appropriate.\n\nNO prior allogeneic transplant. NO prior CD19-directed therapy (no prior CAR-T, no blinatumomab)."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-04-05",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 4/2022 - 9/2022: R-CHOP x6 [L1]\n- 11/2022 - 1/2023: R-ICE x3 [salvage, considered L2 w/ consolidation]\n- 2/15/2023: AUTOLOGOUS STEM CELL TRANSPLANT (conditioning: BEAM). Patient was own stem cell donor. NOT allogeneic.\n- 2026: relapsed disease\n\nPRIOR SCT: autoSCT 2/2023 (self-donor). NO allogeneic SCT.\nPRIOR CD19-DIRECTED TX: NONE.\nPRIOR CAR-T: NONE."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-012",
+      "demographics": {"age": 55, "sex": "M", "mrn": "SYN-7798226"},
+      "expected_label": "INELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — prior CAR-T buried in old note. Recent notes focus on current disease. A progress note from 11/2023 mentions 'patient received axi-cel on 11/15/23 at OutsideCenter with CR x 8 months then relapsed.' Prior CD19 CAR-T is an exclusion for most CD19-directed trials. Agent must find this in historical records.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2026-02-02",
+          "author": "M. Abramowitz, MD",
+          "content": "SPECIMEN: L supraclav LN, FNA + core\n\nMICRO: DLBCL, non-GCB subtype. Ki-67 80%. CD20+ (note: retained positivity).\n\nIHC: CD20+ CD19+ (dim) CD79a+ MUM1+ BCL6-/weak+ CD10-. BCL2+.\n\nFISH: no rearrangements.\n\nDX: RECURRENT DIFFUSE LARGE B-CELL LYMPHOMA, NON-GCB TYPE. CD20 and CD19 expression retained."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-10",
+          "author": "L. Tanaka, MD",
+          "content": "55M new pt to our institution. Transferred care from Valley Regional Cancer Center for 'advanced options.'\n\nDLBCL dx initially 3/2023 per outside records (path reviewed — DLBCL non-GCB). Multiply pretreated.\n\nRecent events (last 6 mo): progression on polatuzumab-BR, ended 1/2026. New disease L supraclav + retroperitoneum. Bx 2/2/26 at our center c/w recurrent DLBCL.\n\nECOG 1. Motivated pt. Understands situation is complex.\n\nPMH: HTN, GERD.\n\nLabs: WBC 4.0 ANC 1.8 Hgb 10.9 Plt 98. Cr 1.2 CrCl 71. LFTs WNL.\n\nSerologies pending repeat.\n\nA/P: heavily pretreated r/r DLBCL. Evaluating for further tx — considering bispecific (epcoritamab or glofitamab) vs clinical trial. Will review outside tx records in detail and discuss at next visit."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-10",
+          "author": "auto-generated from EHR + scanned outside records",
+          "content": "CANCER TX HX (compiled from internal + outside records):\n\n- 4/2023 - 8/2023: R-CHOP x6 (outside) --> PR, then PD\n- 9/2023 - 10/2023: R-ICE x2 (outside, salvage) --> SD\n- ** 11/15/2023: AXI-CEL (Yescarta) INFUSION at OutsideCenter (Valley Regional). Conditioning flu/cy. CRS grade 2, ICANS grade 1 (resolved). Best response CR by d+30 PET. **\n- CR maintained approximately 8 months\n- 8/2024: biopsy-confirmed relapse, new mediastinal + abdominal dz\n- 9/2024 - 12/2024: tafasitamab + lenalidomide (outside) --> PR, then PD\n- 1/2025 - 6/2025: polatuzumab vedotin + bendamustine + rituximab (Pola-BR) x6 --> PR\n- 7/2025 - 1/2026: maintenance polatuzumab-R --> eventual progression\n- 2/2026: biopsy current dz\n\nPRIOR CD19-DIRECTED THERAPY: YES — axi-cel (Yescarta) 11/15/2023.\nPRIOR SCT: none.\nPRIOR CD20 EXPOSURE: multiple (rituximab through several regimens).\nCD20 and CD19 still expressed on current bx (retained antigen)."
+        }
+      ]
+    },
+    {
+      "patient_id": "PT-013",
+      "demographics": {"age": 72, "sex": "M", "mrn": "SYN-3390412"},
+      "expected_label": "INELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — performance status implied but not explicitly documented. No ECOG score recorded. Narrative describes wheelchair use, spending most of day in bed, son assisting with ADLs — consistent with ECOG 3-4, which excludes from CAR-T. Agent must infer PS from functional description rather than rely on missing structured data.",
+      "documents": [
+        {
+          "doc_type": "pathology_report",
+          "date": "2025-11-22",
+          "author": "S. Chen, MD",
+          "content": "SPECIMEN: inguinal LN core bx\n\nMICRO/IHC: DLBCL, non-GCB. Ki-67 70%. MYC/BCL2/BCL6 FISH neg.\n\nDX: DIFFUSE LARGE B-CELL LYMPHOMA, NON-GCB TYPE, NOS."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-15",
+          "author": "J. Okafor, MD",
+          "content": "72M DLBCL non-GCB dx 11/2025. Completed R-mini-CHOP (reduced dose given age/frailty) x4 cycles, stopped 2/2026 due to poor tolerance + progression on imaging. Now w/ r/r dz.\n\nFamily meeting today — pt brought in via wheelchair by son and daughter-in-law. Son is primary caregiver. Pt has been largely bed-bound since mid chemo. Reports spending 'most of the day' in bed or recliner. Requires assistance to stand and transfer. Son assists w/ bathing, toileting, meal prep. Does not self-feed consistently — poor appetite, pocketing food at times. Lost 18 lbs in 3 months.\n\nPt reports fatigue 'all the time.' No longer uses computer, no longer reads. Mostly watches TV. Hasn't left the home except for medical appts in over 2 months.\n\nECOG: [not recorded in structured field]\n\nROS: fatigue severe. Intermittent low-grade fevers at home (son taking temps). Cough, no sputum. Anorexia. No chest pain.\n\nPMH: CHF (EF 35% baseline), CKD3 (Cr baseline 1.6), T2DM (on insulin), h/o stroke 2019 w/ residual L-sided weakness.\n\nExam: cachectic appearing, speaks slowly, falls asleep during conversation. Lungs: bibasilar rales. Ext: 1+ edema.\n\nLabs 3/13/26: WBC 3.2 ANC 1.4 Hgb 8.9 Plt 101. Cr 2.0 CrCl 32. Albumin 2.4. LFTs: ALT 40, AST 48, tbili 1.1.\n\nA/P: 72M severely deconditioned w/ r/r DLBCL, multiple comorbidities (CHF, CKD3, DM, prior CVA, frailty). Discussed goals of care w/ family. Given functional status and comorbid burden, pt is NOT a candidate for aggressive therapy including CAR-T or autoSCT. Recommend hospice eval / comfort-focused approach. Palliative care consult today."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-15",
+          "author": "auto-generated from EHR",
+          "content": "CANCER TX:\n- 12/1/2025 - 2/15/2026: R-mini-CHOP x4 cycles (dose-reduced). Best response SD; imaging 2/10/26 showed progression.\n- No prior lymphoma tx.\n- No prior SCT.\n\nECOG DOCUMENTED: [none in structured field across all visits]\nFUNCTIONAL STATUS (narrative): bed-bound majority of day, requires caregiver assistance for ADLs, uses wheelchair for transport, anorexia, cachexia. Consistent w/ ECOG 3-4."
+        }
+      ]
+    }
+  ]
+}

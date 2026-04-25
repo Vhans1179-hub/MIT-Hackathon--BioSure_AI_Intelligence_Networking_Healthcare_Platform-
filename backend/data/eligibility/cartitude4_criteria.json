@@ -1,0 +1,452 @@
+{
+  "trial": {
+    "id": "CARTITUDE-4",
+    "nct_number": "NCT04181827",
+    "full_title": "A Phase 3, Randomized Study Comparing Ciltacabtagene Autoleucel Versus Pomalidomide, Bortezomib, Dexamethasone (PVd) or Daratumumab, Pomalidomide, Dexamethasone (DPd) in Subjects With Relapsed and Lenalidomide-Refractory Multiple Myeloma",
+    "intervention": "ciltacabtagene autoleucel (cilta-cel / Carvykti)",
+    "indication": "Multiple myeloma after 1-3 prior lines of therapy, including a proteasome inhibitor and an immunomodulatory drug, that is lenalidomide-refractory",
+    "sponsor": "Janssen / Legend Biotech",
+    "fda_label_date": "2024-04-05",
+    "label_indication": "Adult patients with relapsed or refractory multiple myeloma who have received at least 1 prior line of therapy, including a proteasome inhibitor and an immunomodulatory agent, and are refractory to lenalidomide.",
+    "primary_references": [
+      "ClinicalTrials.gov NCT04181827",
+      "San-Miguel J, Dhakal B, Yong K, et al. Cilta-cel or Standard Care in Lenalidomide-Refractory Multiple Myeloma. N Engl J Med. 2023;389(4):335-347."
+    ],
+    "notes_for_agent": "CARTITUDE-4 is the pivotal trial that earned Carvykti's 2L+ label expansion in April 2024. Eligibility centers on lenalidomide-refractory disease after 1-3 prior lines including a PI and IMiD. Distinct from CARTITUDE-1 which was 4L+ and required prior PI, IMiD, and anti-CD38 mAb (triple-class exposed) with progressive disease. If a patient has had >=4 prior lines or is triple-class refractory, evaluate against CARTITUDE-1 / FDA 4L+ label criteria instead."
+  },
+  "agent_guidance": {
+    "evaluation_approach": "Evaluate each criterion independently. For each: determine MET, NOT_MET, or INDETERMINATE. Cite evidence as {document_id, quoted_text}. Prefer INDETERMINATE over a wrong answer.",
+    "final_determination_logic": "ELIGIBLE requires ALL inclusion criteria MET and ZERO exclusion criteria MET. If any criterion is INDETERMINATE, final result is NEEDS_REVIEW. If any inclusion is NOT_MET or any exclusion is MET, result is INELIGIBLE.",
+    "unstructured_data_priority": "Pathology reports, oncology progress notes, bone marrow biopsy reports, and treatment histories often contain information absent from claims/structured data. Always read narrative content. Do not rely solely on ICD codes (C90.0x is not specific enough for stage or response).",
+    "myeloma_specific_notes": "Myeloma eligibility differs from DLBCL CAR-T in three key ways: (1) prior-lines counting follows IMWG criteria where induction + maintenance + autoSCT may count as a single line; (2) lenalidomide-refractory status must be specifically established; (3) measurable disease requires specific thresholds (serum M-protein, urine M-protein, or involved sFLC).",
+    "confidence_calibration": "HIGH when evidence is explicit and recent. MEDIUM when inferable from multiple documents. LOW when requiring extrapolation or stale documentation.",
+    "recency_rules": {
+      "labs": "must be within 28 days of evaluation",
+      "imaging": "most recent skeletal survey, PET/CT, or MRI",
+      "echo_ekg": "within 6 months unless clinical change",
+      "infectious_serologies": "within 6 months",
+      "bone_marrow": "within 90 days for response assessment, or at progression"
+    }
+  },
+  "eligible_diagnoses": [
+    {"name": "Multiple myeloma, IMWG-defined", "icd10": ["C90.00", "C90.01", "C90.02"], "aliases": ["MM", "active multiple myeloma", "symptomatic multiple myeloma"]},
+    {"name": "Plasma cell myeloma", "aliases": ["plasma cell neoplasm with CRAB or SLiM-CRAB criteria"]}
+  ],
+  "ineligible_diagnoses": [
+    {"name": "Smoldering multiple myeloma", "aliases": ["SMM", "asymptomatic myeloma"], "reason": "Not eligible — must have active/symptomatic MM"},
+    {"name": "MGUS", "aliases": ["monoclonal gammopathy of undetermined significance"], "reason": "Not malignant"},
+    {"name": "Plasma cell leukemia", "aliases": ["PCL", "primary plasma cell leukemia", "secondary plasma cell leukemia"], "reason": "Excluded — circulating plasma cells >=5% of peripheral blood mononuclear cells defines PCL, separate disease entity"},
+    {"name": "Solitary plasmacytoma", "reason": "Single-site disease, different management"},
+    {"name": "Amyloidosis (AL) without active MM", "aliases": ["light chain amyloidosis", "primary amyloidosis"], "reason": "Excluded as primary diagnosis; concurrent symptomatic AL also exclusionary"},
+    {"name": "POEMS syndrome", "reason": "Excluded"},
+    {"name": "Waldenstrom macroglobulinemia", "aliases": ["WM", "lymphoplasmacytic lymphoma"], "reason": "Different B-cell neoplasm, not myeloma"}
+  ],
+  "inclusion_criteria": [
+    {
+      "id": "INC-01",
+      "name": "Adult age",
+      "description": "Age >=18 years at time of consent",
+      "category": "demographic",
+      "look_in": ["demographics"],
+      "met_if": "Patient age is 18 or older",
+      "not_met_if": "Patient age is less than 18",
+      "indeterminate_if": "No age or DOB documented",
+      "common_pitfalls": []
+    },
+    {
+      "id": "INC-02",
+      "name": "Documented multiple myeloma diagnosis",
+      "description": "Histologically or cytologically confirmed diagnosis of multiple myeloma per IMWG criteria, with measurable disease at screening",
+      "category": "diagnostic",
+      "look_in": ["pathology_report", "bone_marrow_biopsy", "oncology_progress_note", "lab_results (SPEP, UPEP, sFLC)"],
+      "met_if": "Confirmed MM diagnosis (e.g., bone marrow plasma cells >=10% or biopsy-proven plasmacytoma) AND IMWG measurable disease criteria met",
+      "imwg_measurable_disease": [
+        "Serum M-protein >=0.5 g/dL (or >=10 g/L), OR",
+        "Urine M-protein >=200 mg/24-hour collection, OR",
+        "Involved serum free light chain (sFLC) >=10 mg/dL with abnormal sFLC ratio, OR",
+        "Measurable plasmacytoma >=2 cm by imaging"
+      ],
+      "not_met_if": "Diagnosis is SMM, MGUS, plasma cell leukemia, solitary plasmacytoma, or non-secretory MM without alternative measurable disease; OR no measurable disease present",
+      "indeterminate_if": "MM diagnosis present but recent SPEP/UPEP/sFLC not documented; or BM biopsy stale (>90 days) without progression",
+      "common_pitfalls": [
+        "Non-secretory MM (no M-protein, normal sFLC) is not measurable — typically excluded unless plasmacytoma",
+        "Light-chain-only MM requires sFLC measurement, not just SPEP",
+        "Bone marrow plasma cells >=10% is a diagnostic criterion but not a measurable-disease criterion alone",
+        "Plasma cell leukemia (>=5% circulating plasma cells) is a separate entity and is EXCLUDED"
+      ],
+      "required_evidence": "BM biopsy report or pathology + recent SPEP/UPEP/sFLC labs"
+    },
+    {
+      "id": "INC-03",
+      "name": "1 to 3 prior lines of therapy",
+      "description": "Patient has received between 1 and 3 prior lines of antimyeloma therapy. Each line counted per IMWG/protocol convention.",
+      "category": "treatment_history",
+      "look_in": ["treatment_history", "oncology_progress_note", "outside_records"],
+      "imwg_line_counting": [
+        "A line of therapy is one or more cycles of a planned treatment program. Induction + autoSCT + consolidation/maintenance counts as ONE line if planned together.",
+        "A new line begins with: progression on therapy and start of new regimen, OR planned switch to a new regimen for any reason after a treatment-free interval.",
+        "Maintenance after induction (e.g., lenalidomide maintenance after RVd induction) is part of the same line if planned upfront.",
+        "Switching agents within a planned program (e.g., dose modifications, swapping bortezomib for ixazomib due to neuropathy) is NOT a new line."
+      ],
+      "met_if": "Patient has received 1, 2, or 3 prior lines per IMWG counting",
+      "not_met_if": "Patient has received 0 prior lines (newly diagnosed) OR >=4 prior lines",
+      "indeterminate_if": "Treatment history is incomplete or line-counting is ambiguous (e.g., regimen changes during a single line)",
+      "common_pitfalls": [
+        "RVd (lenalidomide-bortezomib-dex) induction followed by autoSCT followed by lenalidomide maintenance = ONE line",
+        "Patients with >=4 prior lines should be evaluated against CARTITUDE-1 / 4L+ FDA label instead — do not exclude entirely",
+        "Salvage chemo for relapse counts as a new line",
+        "Anti-CD38 (dara) added to existing regimen at progression = new line (DRd or DVd)",
+        "Common regimen names parse as single lines: VRd, KRd, DVRd, Dara-VRd, RVd, IRd, KCd, VCd, DPd, PVd, Kd"
+      ],
+      "required_evidence": "Treatment log with regimen names + start/stop dates + reason for change"
+    },
+    {
+      "id": "INC-04",
+      "name": "Prior PI and IMiD exposure",
+      "description": "Prior therapy must have included at least one proteasome inhibitor (PI) and at least one immunomodulatory drug (IMiD)",
+      "category": "treatment_history",
+      "look_in": ["treatment_history", "oncology_progress_note"],
+      "proteasome_inhibitors": ["bortezomib (Velcade)", "carfilzomib (Kyprolis)", "ixazomib (Ninlaro)"],
+      "immunomodulatory_drugs": ["lenalidomide (Revlimid)", "pomalidomide (Pomalyst)", "thalidomide (Thalomid)"],
+      "met_if": "Patient has received at least one PI AND at least one IMiD across prior lines",
+      "not_met_if": "Patient has not been exposed to a PI, OR has not been exposed to any IMiD",
+      "common_pitfalls": [
+        "Most modern induction regimens (VRd, RVd, KRd, Dara-VRd) contain both — usually trivially MET if any standard induction given",
+        "Daratumumab + lenalidomide + dex (DRd, no PI) does not satisfy this criterion alone",
+        "Dexamethasone alone is neither a PI nor an IMiD",
+        "Cyclophosphamide is neither (alkylator)"
+      ],
+      "required_evidence": "Treatment log specifying regimen components"
+    },
+    {
+      "id": "INC-05",
+      "name": "Lenalidomide-refractory disease",
+      "description": "Patient is refractory to lenalidomide, defined as progression on or within 60 days of completing the most recent lenalidomide-containing regimen",
+      "category": "treatment_history",
+      "look_in": ["treatment_history", "oncology_progress_note", "imaging response assessments"],
+      "definition_of_refractory": "Progressive disease (per IMWG criteria) DURING lenalidomide therapy or within 60 days of last dose. NOT met by prior lenalidomide exposure with subsequent response or treatment-free remission.",
+      "met_if": "Documented progression on or within 60 days of lenalidomide-containing regimen (could be induction, maintenance, or relapse setting)",
+      "not_met_if": "Patient received lenalidomide but achieved CR/VGPR/PR without progression on therapy; OR last lenalidomide >60 days ago without progression",
+      "indeterminate_if": "Lenalidomide exposure documented but response/progression timing unclear",
+      "common_pitfalls": [
+        "Stopping lenalidomide for toxicity (e.g., cytopenias, rash) is NOT refractory — this is intolerance",
+        "Progression during maintenance lenalidomide DOES count as lenalidomide-refractory",
+        "Time window: progression must occur ON drug or within 60 days of last dose",
+        "Pomalidomide-refractoriness alone does not satisfy this — must specifically be lenalidomide",
+        "If patient is lenalidomide-NAIVE, they fail this criterion (consider alternative trial)"
+      ],
+      "required_evidence": "Date of lenalidomide last dose + date of progressive disease + IMWG response criteria documentation"
+    },
+    {
+      "id": "INC-06",
+      "name": "ECOG performance status 0-1",
+      "description": "Eastern Cooperative Oncology Group performance status of 0 or 1",
+      "category": "functional_status",
+      "look_in": ["oncology_progress_note", "narrative function description"],
+      "met_if": "ECOG 0 or 1 explicitly documented in recent visit",
+      "not_met_if": "ECOG 2, 3, or 4 documented OR narrative describes function consistent with ECOG >=2 (bed-bound >50% of day, requires assistance with ADLs, wheelchair-dependent for non-medical use)",
+      "indeterminate_if": "No ECOG documented AND narrative is insufficient",
+      "ecog_definitions": {
+        "0": "Fully active, no restriction",
+        "1": "Restricted in strenuous activity but ambulatory and able to do light work",
+        "2": "Ambulatory and self-care intact but unable to work; up >50% waking hours",
+        "3": "Limited self-care; bed/chair >50% of day",
+        "4": "Completely disabled; totally bed/chair-bound"
+      },
+      "common_pitfalls": [
+        "Myeloma-related bone pain may transiently worsen PS — assess at baseline pain control",
+        "Renal-impaired patients on hemodialysis may still be ECOG 0-1",
+        "Functional descriptors override absent structured ECOG"
+      ]
+    },
+    {
+      "id": "INC-07",
+      "name": "Adequate absolute neutrophil count",
+      "description": "ANC >=1.0 x10^9/L (>=1000/uL) without G-CSF support in prior 7 days",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC"],
+      "met_if": "Most recent ANC >= 1.0 x10^9/L without recent G-CSF",
+      "not_met_if": "ANC < 1.0 x10^9/L, or G-CSF given within 7 days of measurement",
+      "indeterminate_if": "No recent CBC",
+      "common_pitfalls": ["Myeloma + prior alkylator therapy often produces persistent cytopenias — borderline values warrant repeat"],
+      "required_evidence": "CBC within 28 days"
+    },
+    {
+      "id": "INC-08",
+      "name": "Adequate platelet count",
+      "description": "Platelets >=75 x10^9/L without transfusion in prior 7 days (>=50 x10^9/L acceptable in some protocol amendments if marrow involvement is significant)",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC"],
+      "met_if": "Most recent platelets >= 75 x10^9/L without recent transfusion",
+      "not_met_if": "Platelets < 75 x10^9/L (or < 50 x10^9/L if amendment applies), or platelet transfusion within 7 days",
+      "indeterminate_if": "No recent CBC",
+      "common_pitfalls": ["Heavy marrow involvement may produce persistent thrombocytopenia — protocol amendments sometimes allow lower threshold"],
+      "required_evidence": "CBC within 28 days"
+    },
+    {
+      "id": "INC-09",
+      "name": "Adequate hemoglobin",
+      "description": "Hemoglobin >=8 g/dL (transfusion-independent for >=7 days)",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC", "transfusion_records"],
+      "met_if": "Hgb >= 8.0 g/dL without transfusion in prior 7 days",
+      "not_met_if": "Hgb < 8.0 g/dL despite no recent transfusion, or transfusion-dependent",
+      "indeterminate_if": "No recent CBC or transfusion history unclear",
+      "common_pitfalls": ["MM-related anemia often improves with disease control — chronic Hgb 7-8 may warrant transfusion + reassess"]
+    },
+    {
+      "id": "INC-10",
+      "name": "Adequate renal function",
+      "description": "Creatinine clearance >=40 mL/min (Cockcroft-Gault). NOTE: this threshold is lower than DLBCL CAR-T trials because MM commonly causes renal impairment.",
+      "category": "organ_function",
+      "look_in": ["labs", "comprehensive_metabolic_panel"],
+      "met_if": "CrCl >= 40 mL/min (Cockcroft-Gault or measured)",
+      "not_met_if": "CrCl < 40 mL/min on stable measurement",
+      "indeterminate_if": "Cr documented but no age/weight available for CrCl calculation",
+      "common_pitfalls": [
+        "MM nephropathy: cast nephropathy from light chains often improves with effective MM therapy",
+        "Patients on hemodialysis may still be eligible per protocol amendment — consult specific protocol version",
+        "DLBCL CAR-T trials (e.g., ZUMA-7) require CrCl >=60; CARTITUDE-4 allows >=40 — do NOT apply DLBCL thresholds here",
+        "Use Cockcroft-Gault: ((140-age) x weight_kg x (0.85 if female)) / (72 x Cr_mg/dL)"
+      ],
+      "required_evidence": "Serum creatinine + age/weight"
+    },
+    {
+      "id": "INC-11",
+      "name": "Adequate hepatic function",
+      "description": "ALT and AST <=2.5 x ULN; total bilirubin <=2.0 mg/dL or <=1.5 x ULN (<=3 x ULN if Gilbert syndrome)",
+      "category": "organ_function",
+      "look_in": ["labs", "LFTs"],
+      "met_if": "LFTs within thresholds",
+      "not_met_if": "ALT or AST > 2.5x ULN, or tbili > 1.5x ULN without Gilbert's",
+      "indeterminate_if": "LFTs not recent",
+      "common_pitfalls": [
+        "Hepatic plasmacytomas are rare but possible — may elevate LFTs",
+        "Bortezomib can cause hepatotoxicity; AST/ALT elevations may reflect prior tx"
+      ]
+    },
+    {
+      "id": "INC-12",
+      "name": "Adequate cardiac function",
+      "description": "Left ventricular ejection fraction >=45% by echocardiogram or MUGA; no clinically significant arrhythmia",
+      "category": "organ_function",
+      "look_in": ["echocardiogram", "cardiology_notes"],
+      "met_if": "Recent LVEF >= 45% with no significant pericardial effusion or uncontrolled arrhythmia",
+      "not_met_if": "LVEF < 45%, NYHA class III-IV, OR uncontrolled arrhythmia",
+      "indeterminate_if": "No recent echo (>6 months)",
+      "common_pitfalls": [
+        "Carfilzomib has cardiac toxicity — patients with prior K-containing regimens may have reduced EF",
+        "AL amyloidosis (concurrent) often presents with restrictive cardiomyopathy + low EF"
+      ],
+      "required_evidence": "Echo or MUGA within 6 months"
+    },
+    {
+      "id": "INC-13",
+      "name": "Adequate pulmonary function",
+      "description": "Oxygen saturation >=92% on room air and no clinically significant pleural effusion or active pulmonary disease requiring supplemental O2",
+      "category": "organ_function",
+      "look_in": ["progress_note", "vital_signs", "pulmonary_function_tests"],
+      "met_if": "SpO2 >=92% RA, no significant pulmonary disease",
+      "not_met_if": "Requires supplemental oxygen, OR significant pleural effusion, OR active pulmonary disease",
+      "indeterminate_if": "Pulmonary status not documented"
+    }
+  ],
+  "exclusion_criteria": [
+    {
+      "id": "EXC-01",
+      "name": "Prior BCMA-directed therapy",
+      "description": "Any prior treatment with a BCMA-targeted agent, including BCMA CAR-T, BCMA bispecific antibody, or BCMA antibody-drug conjugate",
+      "category": "prior_treatment",
+      "look_in": ["treatment_history", "oncology_progress_note", "outside_records"],
+      "excluded_agents": [
+        "ciltacabtagene autoleucel (cilta-cel, Carvykti) — including any prior infusion attempt",
+        "idecabtagene vicleucel (ide-cel, Abecma)",
+        "teclistamab (Tecvayli) — BCMA bispecific",
+        "elranatamab (Elrexfio) — BCMA bispecific",
+        "linvoseltamab — BCMA bispecific (investigational/recent approval)",
+        "belantamab mafodotin (Blenrep) — BCMA ADC",
+        "ABBV-383 / etentamig — investigational BCMA bispecific"
+      ],
+      "met_if_patient_has_received": "Any agent in excluded_agents list at any time in history",
+      "not_met_if": "No prior BCMA-directed therapy documented",
+      "indeterminate_if": "Outside records incomplete or reference to 'CAR-T evaluation' without confirmation of infusion",
+      "common_pitfalls": [
+        "Prior CAR-T may be buried in old notes from outside institutions — scan all historical tx logs",
+        "Belantamab was withdrawn from US market 2022 but readministered via expanded access — check 2020-2022 history carefully",
+        "GPRC5D bispecific (talquetamab) is NOT BCMA-targeted — does not exclude",
+        "FcRH5 bispecific (cevostamab) is NOT BCMA-targeted",
+        "Distinguish 'CAR-T evaluation' (workup only) from 'CAR-T infusion' (received)"
+      ]
+    },
+    {
+      "id": "EXC-02",
+      "name": "Prior allogeneic stem cell transplant",
+      "description": "Prior allogeneic (donor) stem cell transplant. Prior AUTOLOGOUS transplant is ALLOWED.",
+      "category": "prior_treatment",
+      "look_in": ["treatment_history", "oncology_progress_note"],
+      "met_if": "Patient has had prior alloSCT",
+      "not_met_if": "No prior alloSCT (autoSCT alone is acceptable)",
+      "common_pitfalls": [
+        "CRITICAL: distinguish AUTO (self-donor, ALLOWED) from ALLO (different donor, EXCLUDED)",
+        "Tandem autologous transplants are permitted",
+        "Autologous SCT is part of standard MM frontline care — do not flag",
+        "Mel-200 / melphalan-based conditioning typically precedes autoSCT",
+        "Reduced-intensity conditioning (RIC) implies allogeneic"
+      ]
+    },
+    {
+      "id": "EXC-03",
+      "name": "Plasma cell leukemia",
+      "description": "Active plasma cell leukemia (>=5% circulating plasma cells in peripheral blood by morphology or flow cytometry)",
+      "category": "disease_extent",
+      "look_in": ["pathology_report", "peripheral_blood_smear", "flow_cytometry", "CBC_with_differential"],
+      "met_if": "Documented PCL or peripheral blood plasma cells >=5% (recent)",
+      "not_met_if": "No circulating plasma cells, or <5% if measured",
+      "indeterminate_if": "No peripheral blood plasma cell quantification documented",
+      "common_pitfalls": [
+        "PCL may be primary (de novo) or secondary (transformation from MM)",
+        "Recent IMWG redefinition lowered threshold from >=20% to >=5% (2021) — use the lower threshold",
+        "Aggressive disease w/ rapid progression should prompt PB smear review"
+      ]
+    },
+    {
+      "id": "EXC-04",
+      "name": "CNS involvement by myeloma",
+      "description": "Active CNS involvement by myeloma (parenchymal plasmacytoma, leptomeningeal disease, or CSF involvement)",
+      "category": "disease_extent",
+      "look_in": ["MRI_brain", "lumbar_puncture_results", "neurology_notes", "imaging"],
+      "met_if": "MRI shows parenchymal plasmacytoma OR leptomeningeal enhancement OR CSF with malignant plasma cells",
+      "not_met_if": "No CNS involvement on imaging or CSF, no neurologic symptoms",
+      "indeterminate_if": "MRI brain not done; consider obtaining if neuro sx",
+      "common_pitfalls": [
+        "Skull-base plasmacytomas with cranial nerve involvement may not be true CNS dz — distinguish bone vs parenchyma",
+        "EMD (extramedullary disease) outside CNS is permitted — distinguish from CNS plasmacytoma",
+        "Cord compression from vertebral plasmacytoma is not CNS involvement per se"
+      ]
+    },
+    {
+      "id": "EXC-05",
+      "name": "Active hepatitis B, hepatitis C, or HIV",
+      "description": "Active HBV (HBsAg+ with detectable DNA), active HCV (HCV RNA detectable), or HIV+ with detectable viral load or CD4 <200",
+      "category": "infection",
+      "look_in": ["hepatitis_panel", "HBV_DNA", "HCV_RNA", "HIV_VL", "CD4_count"],
+      "met_if": "Active HBV, HCV, or uncontrolled HIV",
+      "not_met_if": "All negative; resolved HBV with antiviral prophylaxis acceptable; HIV+ with undetectable VL on stable ART and CD4 >200 may be acceptable",
+      "common_pitfalls": [
+        "HBcAb+ alone (resolved) usually acceptable with entecavir/tenofovir prophylaxis",
+        "HCV Ab+ post-SVR is acceptable",
+        "Well-controlled HIV may be acceptable per amendment; uncontrolled is exclusionary"
+      ]
+    },
+    {
+      "id": "EXC-06",
+      "name": "Active autoimmune disease requiring systemic immunosuppression",
+      "description": "Personal history of autoimmune disease requiring systemic immunosuppression (steroids >10 mg prednisone equivalent, biologics, DMARDs) within the last 2 years",
+      "category": "comorbidity",
+      "look_in": ["problem_list", "medications", "rheumatology_notes", "progress_note narrative"],
+      "met_if": "PATIENT (not family) has documented active autoimmune disease requiring systemic immunosuppression in last 2 years",
+      "not_met_if": "No personal history of active autoimmune disease",
+      "common_pitfalls": [
+        "FAMILY history does NOT count — do not flag based on relatives' conditions",
+        "Hashimoto's on levothyroxine alone is NOT exclusionary",
+        "Type 1 DM on insulin alone is NOT exclusionary",
+        "Topical steroids and inhaled steroids are NOT systemic immunosuppression",
+        "Dexamethasone given as part of MM therapy is NOT classified as immunosuppression for this purpose"
+      ]
+    },
+    {
+      "id": "EXC-07",
+      "name": "Active uncontrolled infection",
+      "description": "Any active uncontrolled infection requiring IV antimicrobials at time of evaluation",
+      "category": "infection",
+      "look_in": ["progress_note", "ID_consult", "imaging", "culture_results"],
+      "met_if": "Currently on IV antimicrobials for active infection, OR uncontrolled infection",
+      "not_met_if": "No active infection or infection treated to resolution",
+      "common_pitfalls": [
+        "Prophylactic antimicrobials (acyclovir, Bactrim, IVIG) do NOT count as active infection",
+        "MM patients have high baseline infection risk — IVIG and prophylactic abx are common"
+      ]
+    },
+    {
+      "id": "EXC-08",
+      "name": "Other active malignancy within 3 years",
+      "description": "Other invasive malignancy within last 3 years, except non-melanoma skin cancer or in-situ carcinomas adequately treated",
+      "category": "medical_history",
+      "look_in": ["problem_list", "oncology_history"],
+      "met_if": "Another active or recently-treated invasive malignancy within 3 years",
+      "not_met_if": "No other cancer, or other cancer >3 years in remission, or excepted (BCC, SCC of skin, in-situ disease)",
+      "common_pitfalls": [
+        "MGUS is NOT a separate malignancy",
+        "Smoldering MM that progressed to active MM is the SAME disease, not separate",
+        "Localized prostate cancer on active surveillance: variable — check protocol"
+      ]
+    },
+    {
+      "id": "EXC-09",
+      "name": "Significant cardiac disease",
+      "description": "NYHA class III-IV heart failure, MI within 6 months, unstable angina, clinically significant arrhythmia, or LVEF <45%",
+      "category": "comorbidity",
+      "look_in": ["cardiology_notes", "echocardiogram", "EKG", "hospitalization_records"],
+      "met_if": "Any of the above cardiac criteria",
+      "not_met_if": "Stable cardiac disease with EF >=45%, no recent events",
+      "common_pitfalls": [
+        "Carfilzomib cardiotoxicity may have left residual EF reduction",
+        "AL amyloidosis cardiac involvement common in MM patients",
+        "Old MI (>6 months) with preserved EF is generally acceptable"
+      ]
+    },
+    {
+      "id": "EXC-10",
+      "name": "Stroke or seizure within 6 months",
+      "description": "History of stroke, transient ischemic attack, or seizure within 6 months of evaluation",
+      "category": "comorbidity",
+      "look_in": ["neurology_notes", "hospitalization_records", "problem_list"],
+      "met_if": "CVA, TIA, or seizure within 6 months",
+      "not_met_if": "No recent stroke or seizure",
+      "common_pitfalls": [
+        "ICANS risk with CAR-T → recent CNS events are exclusionary",
+        "Old stroke with stable neuro deficits and >6 months out is acceptable"
+      ]
+    },
+    {
+      "id": "EXC-11",
+      "name": "Pregnancy or lactation",
+      "description": "Pregnant or breastfeeding women",
+      "category": "demographic",
+      "look_in": ["pregnancy_test", "OB_notes"],
+      "met_if": "Pregnant (positive hCG) or currently breastfeeding",
+      "not_met_if": "Not pregnant, post-menopausal, surgically sterile, or male",
+      "required_evidence": "Negative pregnancy test for women of childbearing potential"
+    }
+  ],
+  "alternative_trial_suggestions": {
+    "if_4_or_more_prior_lines_or_triple_class_refractory": "Consider CARTITUDE-1 / FDA 4L+ Carvykti label (heavily-pretreated patients with prior PI + IMiD + anti-CD38 mAb, refractory to last line). Also consider ide-cel (Abecma) per KarMMa-3 trial for similar 3L+ population.",
+    "if_lenalidomide_naive": "Patient does not meet CARTITUDE-4 inclusion (requires lenalidomide-refractory). Consider standard 2L regimens including lenalidomide-based approaches first.",
+    "if_prior_BCMA_therapy": "Excluded from BCMA CAR-T trials. Consider GPRC5D-targeted (talquetamab), FcRH5-targeted (cevostamab), or non-BCMA approaches.",
+    "if_plasma_cell_leukemia": "PCL-specific clinical trials; standard MM CAR-T trials exclude PCL.",
+    "if_CNS_involvement": "CNS-MM-specific protocols; standard CARTITUDE-4 excludes CNS disease.",
+    "if_ide_cel_preferred": "KarMMa-3 trial (ide-cel) has similar 2L+ eligibility for triple-class-exposed patients."
+  },
+  "output_schema_for_agent": {
+    "patient_evaluation_result": {
+      "patient_id": "string",
+      "trial_id": "CARTITUDE-4",
+      "evaluation_date": "ISO-8601 date",
+      "final_determination": "ELIGIBLE | INELIGIBLE | NEEDS_REVIEW",
+      "summary_reasoning": "2-3 sentence human-readable summary",
+      "criteria_results": [
+        {
+          "criterion_id": "INC-01",
+          "result": "MET | NOT_MET | INDETERMINATE",
+          "confidence": "HIGH | MEDIUM | LOW",
+          "reasoning": "Why this determination was made",
+          "evidence": [
+            {"document_id": "string", "quoted_text": "exact span", "location": "optional structural hint"}
+          ]
+        }
+      ],
+      "flags": ["concerns, missing data, recommendations"],
+      "alternative_trials_suggested": ["trial IDs if patient fails CARTITUDE-4 but fits elsewhere"]
+    }
+  }
+}

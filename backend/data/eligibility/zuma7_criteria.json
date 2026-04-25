@@ -1,0 +1,458 @@
+{
+  "trial": {
+    "id": "ZUMA-7",
+    "nct_number": "NCT03391466",
+    "full_title": "A Phase 3, Randomized, Open-Label Study Evaluating the Efficacy of Axicabtagene Ciloleucel Versus Standard of Care Therapy in Subjects With Relapsed/Refractory Diffuse Large B Cell Lymphoma",
+    "intervention": "axicabtagene ciloleucel (axi-cel / Yescarta)",
+    "indication": "Second-line therapy for relapsed/refractory large B-cell lymphoma",
+    "sponsor": "Kite Pharma / Gilead",
+    "fda_label_date": "2022-04-01",
+    "primary_references": [
+      "ClinicalTrials.gov NCT03391466",
+      "Locke FL, Miklos DB, Jacobson CA, et al. Axicabtagene Ciloleucel as Second-Line Therapy for Large B-Cell Lymphoma. N Engl J Med. 2022;386(7):640-654."
+    ],
+    "notes_for_agent": "ZUMA-7 is specifically a 2nd-line trial for patients who are refractory to or relapsed within 12 months of completing first-line chemoimmunotherapy. Patients in 3L+ setting should be evaluated against ZUMA-1 criteria instead. Prior autoSCT is an EXCLUSION for ZUMA-7 (it was the comparator arm)."
+  },
+  "agent_guidance": {
+    "evaluation_approach": "Evaluate each criterion independently. For each: determine MET, NOT_MET, or INDETERMINATE. Cite evidence as {document_id, quoted_text_span}. Prefer INDETERMINATE over a wrong answer.",
+    "final_determination_logic": "ELIGIBLE requires ALL inclusion criteria MET and ZERO exclusion criteria MET. If any criterion is INDETERMINATE, final result is NEEDS_REVIEW with missing data flagged. If any inclusion is NOT_MET or any exclusion is MET, result is INELIGIBLE.",
+    "unstructured_data_priority": "Pathology reports, progress notes, and treatment histories often contain information absent from structured fields (problem lists, billing codes). Always read narrative content. Do not rely solely on ICD codes.",
+    "confidence_calibration": "HIGH when evidence is explicit and recent. MEDIUM when inferable from multiple documents. LOW when requiring extrapolation or when documentation is stale.",
+    "recency_rules": {
+      "labs": "must be within 28 days of evaluation",
+      "imaging": "most recent PET/CT or MRI defining disease status",
+      "echo_ekg": "within 6 months unless clinical change",
+      "infectious_serologies": "within 6 months or as clinically indicated"
+    }
+  },
+  "eligible_histologies": [
+    {"name": "Diffuse large B-cell lymphoma, not otherwise specified", "aliases": ["DLBCL NOS", "DLBCL"], "subtypes_all_eligible": ["GCB", "non-GCB", "activated B-cell", "ABC"]},
+    {"name": "High-grade B-cell lymphoma with MYC and BCL2 and/or BCL6 rearrangements", "aliases": ["HGBCL", "double-hit lymphoma", "DHL", "triple-hit lymphoma", "THL"]},
+    {"name": "High-grade B-cell lymphoma, NOS", "aliases": ["HGBCL NOS"]},
+    {"name": "Diffuse large B-cell lymphoma arising from follicular lymphoma", "aliases": ["transformed follicular lymphoma", "tFL", "t-FL", "Richter-like transformation of FL to DLBCL"]},
+    {"name": "T-cell/histiocyte-rich large B-cell lymphoma", "aliases": ["THRLBCL", "T/HRBCL"]}
+  ],
+  "ineligible_histologies": [
+    {"name": "Chronic lymphocytic leukemia / small lymphocytic lymphoma", "aliases": ["CLL", "SLL"], "reason": "Not large B-cell lymphoma"},
+    {"name": "Richter's transformation from CLL", "aliases": ["Richter transformation", "Richter syndrome"], "reason": "Explicit exclusion — histology is DLBCL-like but CLL origin disqualifies"},
+    {"name": "Follicular lymphoma without transformation", "aliases": ["FL grade 1-3A"], "reason": "Not large B-cell lymphoma"},
+    {"name": "Mantle cell lymphoma", "aliases": ["MCL"], "reason": "Not in eligible histology list for ZUMA-7"},
+    {"name": "Marginal zone lymphoma", "aliases": ["MZL", "nodal MZL", "splenic MZL", "MALT"], "reason": "Not large B-cell lymphoma"},
+    {"name": "Burkitt lymphoma", "aliases": ["BL"], "reason": "Explicit exclusion"},
+    {"name": "Primary mediastinal B-cell lymphoma", "aliases": ["PMBCL"], "reason": "Not in ZUMA-7 histology list. NOTE: PMBCL IS eligible for axi-cel per ZUMA-1 (3L+ indication) — consider alternative trial"},
+    {"name": "Primary central nervous system lymphoma", "aliases": ["PCNSL"], "reason": "Separate exclusion — see EXC-04"},
+    {"name": "Primary cutaneous DLBCL", "aliases": ["PC-DLBCL, leg type"], "reason": "Not in eligible histology list"},
+    {"name": "T-cell lymphomas", "aliases": ["PTCL", "ALCL", "AITL", "ATLL"], "reason": "Not B-cell in origin"},
+    {"name": "Classical or nodular lymphocyte-predominant Hodgkin lymphoma", "aliases": ["cHL", "NLPHL"], "reason": "Not large B-cell lymphoma"},
+    {"name": "Lymphoplasmacytic lymphoma / Waldenström's", "aliases": ["LPL", "WM"], "reason": "Not large B-cell lymphoma"}
+  ],
+  "inclusion_criteria": [
+    {
+      "id": "INC-01",
+      "name": "Adult age",
+      "description": "Age ≥18 years at time of consent",
+      "category": "demographic",
+      "look_in": ["demographics", "any document with DOB or age"],
+      "met_if": "Patient age is 18 or older",
+      "not_met_if": "Patient age is less than 18",
+      "indeterminate_if": "No age or DOB documented",
+      "common_pitfalls": ["Pediatric patients should be evaluated for pediatric trials instead"]
+    },
+    {
+      "id": "INC-02",
+      "name": "Eligible histologic diagnosis",
+      "description": "Histologically confirmed large B-cell lymphoma of an eligible subtype (see eligible_histologies list)",
+      "category": "diagnostic",
+      "look_in": ["pathology_report (primary source)", "oncology_progress_note (narrative confirmation)", "outside pathology records"],
+      "met_if": "Pathology report documents a diagnosis matching one entry in eligible_histologies",
+      "not_met_if": "Diagnosis matches an entry in ineligible_histologies",
+      "indeterminate_if": "Histology documented only as 'lymphoma NOS' or 'non-Hodgkin lymphoma' without specific subtype; or ICD code is unspecific (e.g., C85.90) and no pathology narrative available",
+      "common_pitfalls": [
+        "ICD/billing codes are frequently unspecific (C85.90 = 'lymphoma, unspecified'). Always read pathology narrative.",
+        "Transformed FL must be documented as transformed to DLBCL, not just FL with large cells",
+        "Double-hit / HGBCL IS eligible — do not exclude based on high-grade features",
+        "T-cell immunophenotype (CD3+, CD20-) rules out eligibility even if morphology looks large-cell",
+        "PMBCL is NOT eligible for ZUMA-7 but IS eligible for ZUMA-1"
+      ],
+      "required_evidence": "Pathology report with explicit diagnosis + supportive IHC (CD20+, B-cell markers)"
+    },
+    {
+      "id": "INC-03",
+      "name": "Relapsed or refractory after first-line therapy",
+      "description": "Disease is refractory to first-line therapy OR relapsed within 12 months of completing first-line therapy",
+      "category": "treatment_history",
+      "look_in": ["oncology_progress_note", "treatment_history", "outside records"],
+      "refractory_definition": "No complete response to first-line therapy. Specifically: best response of progressive disease, stable disease, or partial response followed by progression. NOT refractory if CR achieved.",
+      "relapse_window": "Documented relapse within 12 months of completing last cycle of first-line therapy",
+      "met_if": "Patient meets refractory definition OR relapsed ≤12 months from end of 1L",
+      "not_met_if": "Patient achieved CR to 1L and relapsed >12 months after completion (late relapse — eligible for SOC autoSCT path, not ZUMA-7)",
+      "indeterminate_if": "End-of-treatment response not documented; relapse date unclear",
+      "common_pitfalls": [
+        "Interim PET CR followed by end-of-treatment PD = refractory (not responsive)",
+        "Partial response that later progresses during tx or within 12 mo = refractory",
+        "Must calculate relapse interval from END of 1L therapy, not start",
+        "If pt has had 2 prior lines, they are in 3L setting — evaluate for ZUMA-1 instead"
+      ],
+      "required_evidence": "Treatment dates for 1L regimen + response assessment (PET/CT reports, response documentation) + date of relapse/progression"
+    },
+    {
+      "id": "INC-04",
+      "name": "First-line regimen contained anti-CD20 + anthracycline",
+      "description": "Prior first-line therapy must have contained an anti-CD20 monoclonal antibody AND an anthracycline-containing chemotherapy regimen",
+      "category": "treatment_history",
+      "look_in": ["treatment_history", "oncology_progress_note", "medication_history"],
+      "anti_cd20_agents": ["rituximab", "obinutuzumab", "ofatumumab"],
+      "anthracyclines": ["doxorubicin (adriamycin)", "daunorubicin", "epirubicin", "idarubicin", "liposomal doxorubicin"],
+      "common_qualifying_regimens": ["R-CHOP", "R-CHOEP", "R-EPOCH", "DA-R-EPOCH", "R-miniCHOP", "Pola-R-CHP (polatuzumab replacing vincristine but contains R + doxo)"],
+      "met_if": "1L regimen includes BOTH an anti-CD20 agent AND an anthracycline",
+      "not_met_if": "1L lacked either anti-CD20 (e.g., CHOP alone, bendamustine-based) or anthracycline (e.g., R-Benda alone, R-Lenalidomide)",
+      "indeterminate_if": "Regimen documented only by acronym not in common_qualifying_regimens list, or components unclear",
+      "common_pitfalls": [
+        "'Rituximab + CHOP' in free text = R-CHOP (same regimen, parse this)",
+        "'DA-R-EPOCH' contains doxorubicin → qualifies",
+        "'R-Benda' / 'BR' (bendamustine-rituximab) does NOT contain anthracycline → does not qualify for this criterion",
+        "Pola-R-CHP replaces vincristine with polatuzumab but retains doxorubicin → qualifies",
+        "CD20-negative tumors may have waiver — check pathology CD20 status"
+      ],
+      "required_evidence": "Treatment log or progress note specifying regimen components"
+    },
+    {
+      "id": "INC-05",
+      "name": "ECOG performance status 0-1",
+      "description": "Eastern Cooperative Oncology Group performance status of 0 or 1",
+      "category": "functional_status",
+      "look_in": ["oncology_progress_note (explicit ECOG)", "progress_note narrative (functional description)"],
+      "met_if": "ECOG 0 or 1 explicitly documented in recent visit",
+      "not_met_if": "ECOG 2, 3, or 4 documented OR narrative describes function consistent with ECOG ≥2 (e.g., bed-bound >50% of day, requires assistance with ADLs, wheelchair-dependent for non-medical use)",
+      "indeterminate_if": "No ECOG documented AND narrative is insufficient to infer (e.g., 'patient doing reasonably well' without functional detail)",
+      "ecog_definitions": {
+        "0": "Fully active, able to carry on all pre-disease performance without restriction",
+        "1": "Restricted in physically strenuous activity but ambulatory and able to carry out work of a light or sedentary nature",
+        "2": "Ambulatory and capable of all self-care but unable to carry out any work activities; up and about more than 50% of waking hours",
+        "3": "Capable of only limited self-care; confined to bed or chair more than 50% of waking hours",
+        "4": "Completely disabled; cannot carry on any self-care; totally confined to bed or chair"
+      },
+      "common_pitfalls": [
+        "Absence of documented ECOG does not mean patient is ECOG 0 — check narrative",
+        "Phrases like 'bed-bound most of the day', 'requires assistance with ADLs', 'wheelchair-dependent' suggest ECOG 3-4",
+        "Phrases like 'works full-time', 'runs regularly', 'independent ADLs' suggest ECOG 0-1",
+        "'Uses walker intermittently' alone is not decisive — look at overall function"
+      ],
+      "required_evidence": "Recent progress note (within 4 weeks) with ECOG or functional description"
+    },
+    {
+      "id": "INC-06",
+      "name": "Adequate absolute neutrophil count",
+      "description": "ANC ≥1000/μL (or ≥1.0 x10⁹/L) without G-CSF support in prior 7 days",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC_results"],
+      "met_if": "Most recent ANC ≥ 1.0 x10⁹/L (1000/μL)",
+      "not_met_if": "ANC < 1.0 x10⁹/L, or recent G-CSF (filgrastim, pegfilgrastim) administration within 7 days of the lab",
+      "indeterminate_if": "No recent CBC or unit ambiguity",
+      "common_pitfalls": [
+        "Unit conversions: 1000/μL = 1.0 x10⁹/L = 1.0 K/μL",
+        "Must check if G-CSF given recently (would artificially inflate ANC)",
+        "Borderline values (e.g., 0.95 vs 1.02) should be confirmed with repeat lab"
+      ],
+      "required_evidence": "CBC within 28 days"
+    },
+    {
+      "id": "INC-07",
+      "name": "Adequate platelet count",
+      "description": "Platelets ≥75,000/μL (≥75 x10⁹/L) without transfusion in prior 7 days",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC_results"],
+      "met_if": "Most recent platelets ≥ 75 x10⁹/L",
+      "not_met_if": "Platelets < 75 x10⁹/L, or platelet transfusion within 7 days of measurement",
+      "indeterminate_if": "No recent CBC or transfusion history unclear",
+      "common_pitfalls": ["Same transfusion check applies as ANC/G-CSF"],
+      "required_evidence": "CBC within 28 days"
+    },
+    {
+      "id": "INC-08",
+      "name": "Adequate hemoglobin",
+      "description": "Hemoglobin ≥8 g/dL",
+      "category": "laboratory",
+      "look_in": ["labs", "CBC_results"],
+      "met_if": "Hgb ≥ 8.0 g/dL",
+      "not_met_if": "Hgb < 8.0 g/dL",
+      "indeterminate_if": "No recent CBC",
+      "required_evidence": "CBC within 28 days"
+    },
+    {
+      "id": "INC-09",
+      "name": "Adequate renal function",
+      "description": "Creatinine clearance ≥60 mL/min (calculated or measured) or serum creatinine ≤1.5 × ULN",
+      "category": "organ_function",
+      "look_in": ["labs", "comprehensive_metabolic_panel"],
+      "met_if": "CrCl ≥ 60 mL/min (Cockcroft-Gault or MDRD) OR Cr ≤ 1.5 × institutional ULN",
+      "not_met_if": "CrCl < 60 AND Cr > 1.5 × ULN",
+      "indeterminate_if": "Only Cr available without age/weight for CrCl calculation and value is borderline",
+      "common_pitfalls": [
+        "Older patients with reduced muscle mass may have 'normal' Cr but low CrCl — always calculate",
+        "Use Cockcroft-Gault: ((140-age) × weight_kg × (0.85 if female)) / (72 × Cr_mg/dL)",
+        "eGFR ≥60 by MDRD/CKD-EPI is generally acceptable"
+      ],
+      "required_evidence": "Serum creatinine + age/weight (or direct CrCl/eGFR)"
+    },
+    {
+      "id": "INC-10",
+      "name": "Adequate hepatic function",
+      "description": "ALT and AST ≤2.5 × ULN; total bilirubin ≤1.5 × ULN (≤3 × ULN if due to Gilbert's syndrome or lymphoma involvement)",
+      "category": "organ_function",
+      "look_in": ["labs", "LFTs"],
+      "met_if": "ALT ≤ 2.5×ULN AND AST ≤ 2.5×ULN AND total bili ≤ 1.5×ULN (or Gilbert's/lymphoma exception)",
+      "not_met_if": "Any transaminase > 2.5×ULN, or tbili > 1.5×ULN without Gilbert's/lymphoma explanation",
+      "indeterminate_if": "LFTs not recent or institutional ULN not specified",
+      "common_pitfalls": [
+        "Typical institutional ULN: ALT ~40 U/L, AST ~40 U/L, tbili ~1.2 mg/dL",
+        "Gilbert's syndrome = isolated indirect hyperbilirubinemia, must be documented",
+        "Lymphomatous liver involvement can raise LFTs — check imaging for liver lesions"
+      ],
+      "required_evidence": "LFT panel within 28 days"
+    },
+    {
+      "id": "INC-11",
+      "name": "Adequate cardiac function",
+      "description": "Left ventricular ejection fraction ≥50% by echocardiogram or MUGA; no evidence of pericardial effusion; no clinically significant arrhythmia",
+      "category": "organ_function",
+      "look_in": ["echocardiogram_reports", "cardiology_notes", "imaging"],
+      "met_if": "Recent LVEF ≥ 50% with no significant pericardial effusion or uncontrolled arrhythmia",
+      "not_met_if": "LVEF < 50%, OR moderate-large pericardial effusion, OR NYHA class III-IV heart failure, OR uncontrolled arrhythmia",
+      "indeterminate_if": "No recent echo (>6 months) or results not in chart",
+      "common_pitfalls": [
+        "LVEF 45-49% is below ZUMA-7 threshold even though many CAR-T protocols accept ≥45%",
+        "Prior anthracycline exposure → always verify current EF before CAR-T",
+        "Borderline EF + prior MI may require cardio-onc clearance"
+      ],
+      "required_evidence": "Echo or MUGA within 6 months"
+    },
+    {
+      "id": "INC-12",
+      "name": "Intent to proceed to autologous stem cell transplant",
+      "description": "Patient is a candidate for and intended to proceed to high-dose chemotherapy + autologous stem cell transplant (this was the ZUMA-7 comparator arm standard-of-care)",
+      "category": "eligibility_context",
+      "look_in": ["oncology_progress_note", "transplant_evaluation_note"],
+      "met_if": "Treating oncologist has deemed patient a transplant candidate (implicit if ECOG 0-1, adequate organ function, no prior autoSCT)",
+      "not_met_if": "Patient deemed non-transplant-eligible due to age, comorbidity, or frailty",
+      "indeterminate_if": "Not explicitly discussed",
+      "notes": "This criterion is more of a clinical judgment gate. Most patients meeting all other criteria will satisfy this implicitly. Some protocols waive this.",
+      "common_pitfalls": ["Do not confuse with requiring patient to HAVE had autoSCT — prior autoSCT is an EXCLUSION (see EXC-02)"]
+    }
+  ],
+  "exclusion_criteria": [
+    {
+      "id": "EXC-01",
+      "name": "Prior CD19-directed therapy",
+      "description": "Any prior treatment with a CD19-targeted agent, including prior CAR-T cell therapy, CD19 bispecific antibody (blinatumomab), or antibody-drug conjugate (loncastuximab tesirine)",
+      "category": "prior_treatment",
+      "look_in": ["treatment_history", "oncology_progress_note", "outside records (may be years old)"],
+      "excluded_agents": [
+        "axicabtagene ciloleucel (axi-cel, Yescarta)",
+        "tisagenlecleucel (tisa-cel, Kymriah)",
+        "lisocabtagene maraleucel (liso-cel, Breyanzi)",
+        "brexucabtagene autoleucel (brexu-cel, Tecartus)",
+        "blinatumomab (Blincyto)",
+        "loncastuximab tesirine (Zynlonta)",
+        "tafasitamab (Monjuvi) — CD19 mAb"
+      ],
+      "met_if_patient_has_received": "Any agent in excluded_agents list, at any time in history",
+      "not_met_if": "No prior CD19-directed therapy in any record",
+      "indeterminate_if": "Outside records incomplete",
+      "common_pitfalls": [
+        "Prior CAR-T may be buried in old notes or outside records — scan historical tx log",
+        "Tafasitamab + lenalidomide (Monjuvi regimen) is a prior CD19 exposure — EXCLUDES even though not CAR-T",
+        "'CAR-T evaluation' in notes is NOT same as CAR-T infusion — check if infusion actually occurred"
+      ]
+    },
+    {
+      "id": "EXC-02",
+      "name": "Prior autologous stem cell transplant",
+      "description": "ZUMA-7 specifically excludes patients with prior autoSCT, as autoSCT was the comparator arm. (NOTE: patients with prior autoSCT may still be eligible for axi-cel per ZUMA-1 / 3L+ label.)",
+      "category": "prior_treatment",
+      "look_in": ["treatment_history", "oncology_progress_note"],
+      "met_if": "Patient has had prior autologous stem cell transplant (self-donor)",
+      "not_met_if": "No prior SCT of any kind",
+      "common_pitfalls": [
+        "Distinguish AUTO (self-donor) from ALLO (different donor) — both mentioned as 'SCT' or 'BMT'",
+        "BEAM, CBV, melphalan-based conditioning regimens typically precede autoSCT",
+        "If patient has had autoSCT, consider routing to ZUMA-1 (3L+) evaluation instead of disqualifying entirely"
+      ]
+    },
+    {
+      "id": "EXC-03",
+      "name": "Prior allogeneic stem cell transplant",
+      "description": "Prior allogeneic (donor) stem cell transplant",
+      "category": "prior_treatment",
+      "look_in": ["treatment_history", "oncology_progress_note"],
+      "met_if": "Patient has had prior alloSCT",
+      "not_met_if": "No prior alloSCT",
+      "common_pitfalls": [
+        "Prior autoSCT is also exclusionary per EXC-02, but for different reason (trial design)",
+        "Matched-sibling, matched-unrelated, haploidentical, and cord-blood transplants all count as alloSCT"
+      ]
+    },
+    {
+      "id": "EXC-04",
+      "name": "Central nervous system lymphoma involvement",
+      "description": "Primary CNS lymphoma OR secondary CNS involvement by lymphoma (parenchymal, leptomeningeal, or CSF-positive)",
+      "category": "disease_extent",
+      "look_in": ["imaging_reports (MRI brain)", "lumbar_puncture_results", "pathology_reports", "neurology_notes"],
+      "met_if": "MRI shows parenchymal lesion consistent with lymphoma, OR leptomeningeal enhancement, OR CSF cytology/flow positive for malignant cells, OR documented history of CNS lymphoma (even if treated)",
+      "not_met_if": "MRI brain clear AND no CSF involvement documented AND no history of CNS disease",
+      "indeterminate_if": "MRI brain not yet done (often required for CAR-T workup)",
+      "common_pitfalls": [
+        "History of CNS-directed prophylaxis (IT MTX) does not imply CNS involvement — check indication",
+        "Cranial nerve palsies or neuro sx should prompt CNS workup",
+        "MATRix/MATR regimens imply prior CNS-directed tx and may indicate CNS dz history"
+      ]
+    },
+    {
+      "id": "EXC-05",
+      "name": "Richter's transformation from CLL",
+      "description": "DLBCL arising as Richter's transformation from underlying CLL/SLL",
+      "category": "histology",
+      "look_in": ["pathology_reports", "oncology_history"],
+      "met_if": "Pathology or history documents Richter's transformation, or patient has known CLL with new large-cell transformation",
+      "not_met_if": "De novo DLBCL without CLL background",
+      "common_pitfalls": [
+        "Histology alone looks like DLBCL — must check disease background/origin",
+        "Look for prior CLL diagnosis or lymphocytosis history",
+        "Richter's is specifically called out as exclusion despite DLBCL morphology"
+      ]
+    },
+    {
+      "id": "EXC-06",
+      "name": "Active HIV infection",
+      "description": "HIV positive with detectable viral load, or uncontrolled HIV",
+      "category": "infection",
+      "look_in": ["infectious_disease_panel", "HIV_viral_load", "CD4_count", "ID_consult_notes"],
+      "met_if": "HIV Ab/Ag positive AND viral load detectable (or CD4 < 200), OR not on suppressive ART",
+      "not_met_if": "HIV negative, OR HIV+ with undetectable VL on stable ART and CD4 > 200 (some protocols allow this)",
+      "indeterminate_if": "HIV status not recently tested",
+      "common_pitfalls": [
+        "Well-controlled HIV (undetectable VL, CD4 >200) may not be absolute exclusion in all CAR-T trials — check specific protocol",
+        "Detectable viral load OR active opportunistic infection = clear exclusion",
+        "EBV+ DLBCL in HIV patients is common — tumor EBV status ≠ HIV status"
+      ]
+    },
+    {
+      "id": "EXC-07",
+      "name": "Active hepatitis B or C infection",
+      "description": "Active HBV infection (HBsAg+ or HBV DNA detectable) or active HCV infection (HCV RNA detectable)",
+      "category": "infection",
+      "look_in": ["hepatitis_panel", "HBV_DNA", "HCV_RNA", "hepatology_notes"],
+      "met_if": "HBsAg positive with detectable HBV DNA, OR HCV RNA detectable",
+      "not_met_if": "HBsAg negative; resolved HBV (HBsAg-, HBcAb+) may be acceptable with antiviral prophylaxis; HCV Ab+ with undetectable RNA after treatment is acceptable",
+      "common_pitfalls": [
+        "HBcAb+ alone (resolved prior infection) usually requires entecavir/tenofovir prophylaxis but not exclusion",
+        "Check HBV DNA, not just HBsAg — reactivation risk",
+        "HCV Ab+ post-treatment with SVR is not an exclusion"
+      ]
+    },
+    {
+      "id": "EXC-08",
+      "name": "Active autoimmune disease requiring systemic immunosuppression",
+      "description": "Personal history of autoimmune disease requiring systemic immunosuppression (steroids >10 mg prednisone equivalent, biologics, DMARDs, or other immunosuppressants) within the last 2 years",
+      "category": "comorbidity",
+      "look_in": ["problem_list", "medications", "rheumatology_notes", "progress_note narrative"],
+      "qualifying_conditions": ["SLE on treatment", "rheumatoid arthritis on biologics/DMARDs", "IBD on immunosuppressants", "autoimmune hepatitis on treatment", "MS on DMTs", "myasthenia gravis on treatment"],
+      "met_if": "PATIENT has documented autoimmune disease currently or recently (2 years) requiring systemic immunosuppression",
+      "not_met_if": "No personal history of active autoimmune disease; family history of autoimmune conditions does NOT qualify",
+      "common_pitfalls": [
+        "FAMILY history ≠ personal history — do not flag patient for relatives' autoimmune conditions",
+        "Hashimoto's on levothyroxine alone is generally NOT exclusionary (thyroid replacement ≠ immunosuppression)",
+        "Type 1 diabetes on insulin alone is generally NOT exclusionary",
+        "Vitiligo, psoriasis not on systemic tx generally NOT exclusionary",
+        "Topical or inhaled steroids alone generally do not count as systemic immunosuppression"
+      ]
+    },
+    {
+      "id": "EXC-09",
+      "name": "Uncontrolled active infection",
+      "description": "Any active uncontrolled infection requiring IV antibiotics, antifungals, or antivirals",
+      "category": "infection",
+      "look_in": ["progress_note (active problems)", "ID_consult", "imaging (pneumonia)", "culture_results"],
+      "met_if": "Currently on IV antimicrobials for active infection, OR uncontrolled infection without clear resolution pathway",
+      "not_met_if": "No active infection, or infection treated and resolved",
+      "common_pitfalls": [
+        "Prophylactic antimicrobials (e.g., acyclovir, Bactrim) do NOT count as active infection",
+        "Recent infection treated to resolution is acceptable",
+        "Active sepsis, pneumonia, bacteremia are disqualifying until resolved"
+      ]
+    },
+    {
+      "id": "EXC-10",
+      "name": "Other active malignancy within 3 years",
+      "description": "History of another invasive malignancy within the last 3 years, except for non-melanoma skin cancer or in-situ cervical carcinoma adequately treated",
+      "category": "medical_history",
+      "look_in": ["problem_list", "oncology_history", "pathology_history"],
+      "met_if": "Another active or recently (within 3 years) treated invasive malignancy",
+      "not_met_if": "No other cancer, OR other cancer >3 years in remission, OR non-melanoma skin cancer, OR CIS adequately treated",
+      "common_pitfalls": [
+        "Prior transformed lymphoma (e.g., FL that transformed to DLBCL) is SAME disease — not a second malignancy",
+        "Basal cell / squamous cell skin cancers generally allowed",
+        "DCIS and cervical CIS generally allowed",
+        "Early-stage treated prostate cancer on active surveillance: variable — check protocol specifics"
+      ]
+    },
+    {
+      "id": "EXC-11",
+      "name": "Clinically significant cardiac disease",
+      "description": "NYHA class III-IV heart failure, unstable angina, myocardial infarction within 12 months, or clinically significant uncontrolled arrhythmia",
+      "category": "comorbidity",
+      "look_in": ["cardiology_notes", "echocardiogram", "EKG", "hospitalization_records"],
+      "met_if": "Any of: NYHA III-IV HF, unstable angina, MI within 12 months, uncontrolled arrhythmia, symptomatic aortic stenosis",
+      "not_met_if": "Stable cardiac disease, EF ≥50%, no recent events",
+      "common_pitfalls": [
+        "Old MI (>12 months ago) with preserved EF is generally acceptable",
+        "Atrial fibrillation on rate/rhythm control is generally acceptable",
+        "Low-EF heart failure is both a cardiac exclusion AND fails INC-11"
+      ]
+    },
+    {
+      "id": "EXC-12",
+      "name": "Pregnancy or lactation",
+      "description": "Pregnant or breastfeeding women",
+      "category": "demographic",
+      "look_in": ["pregnancy_test", "OB_notes", "progress_note"],
+      "met_if": "Pregnant (positive hCG) or currently breastfeeding",
+      "not_met_if": "Not pregnant (negative serum/urine hCG in women of childbearing potential); post-menopausal; surgically sterile; male",
+      "required_evidence": "Negative pregnancy test within 7 days for women of childbearing potential"
+    }
+  ],
+  "alternative_trial_suggestions": {
+    "if_prior_autoSCT_or_3L_plus": "Consider ZUMA-1 criteria (axi-cel 3L+ label): DLBCL, PMBCL, HGBCL, tFL after ≥2 prior lines. Most ZUMA-7 criteria apply but prior autoSCT is ALLOWED and ≥2 prior lines is REQUIRED.",
+    "if_PMBCL": "PMBCL is not eligible for ZUMA-7 but IS eligible for ZUMA-1 (axi-cel 3L+) and various liso-cel trials.",
+    "if_primary_CNS_lymphoma": "Consider CNS-specific CAR-T trials (expanded access or investigational); standard ZUMA-7/TRANSFORM/BELINDA exclude CNS disease.",
+    "if_CLL_Richters": "Consider CLL-specific CAR-T trials (liso-cel has CLL indication per TRANSCEND-CLL-004).",
+    "if_liso_cel_preferred": "TRANSFORM trial uses similar 2L eligibility with liso-cel; broader age range (no upper limit) and allows ECOG 2 in some cases.",
+    "if_tisa_cel_preferred": "BELINDA trial for tisa-cel in 2L failed primary endpoint — tisa-cel 2L not standard; tisa-cel approved 3L+ per JULIET."
+  },
+  "output_schema_for_agent": {
+    "patient_evaluation_result": {
+      "patient_id": "string",
+      "trial_id": "ZUMA-7",
+      "evaluation_date": "ISO-8601 date",
+      "final_determination": "ELIGIBLE | INELIGIBLE | NEEDS_REVIEW",
+      "summary_reasoning": "2-3 sentence human-readable summary",
+      "criteria_results": [
+        {
+          "criterion_id": "INC-01",
+          "result": "MET | NOT_MET | INDETERMINATE",
+          "confidence": "HIGH | MEDIUM | LOW",
+          "reasoning": "Why this determination was made",
+          "evidence": [
+            {
+              "document_id": "e.g., pathology_report_2025-09-14",
+              "quoted_text": "exact span from document supporting determination",
+              "location": "optional structural location (e.g., 'IHC section')"
+            }
+          ]
+        }
+      ],
+      "flags": ["list of concerns, missing data, or recommendations"],
+      "alternative_trials_suggested": ["list of trial IDs if patient fails ZUMA-7 but may fit elsewhere"]
+    }
+  }
+}

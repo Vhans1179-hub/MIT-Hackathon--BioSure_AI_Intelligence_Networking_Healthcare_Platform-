@@ -1,0 +1,24 @@
+{
+  "patient_id": "MM-005",
+  "snapshot_date": "2026-05-10",
+  "snapshot_label": "Mid-line re-evaluation",
+  "demographics": {"age": 73, "sex": "M", "mrn": "SYN-MM-100621"},
+  "ghost_patient_status": "Re-evaluation triggered by new oncology progress note in EHR",
+  "expected_label": "NEEDS_REVIEW",
+  "difficulty": "medium",
+  "expected_reasoning": "Patient started DRd in February (now exposed to lenalidomide) but is currently RESPONDING — not refractory. Cannot yet establish lenalidomide-refractoriness. NEEDS_REVIEW until either response is durable (eligibility remains blocked) or progression occurs (becomes len-refractory and eligible).",
+  "documents": [
+    {
+      "doc_type": "oncology_progress_note",
+      "date": "2026-05-08",
+      "author": "R. Singh, MD",
+      "content": "73M IgG kappa MM, dx 5/2022. Now 3rd line of therapy.\n\nUPDATED TX HX:\n- L1 (6/2022 - 4/2023): VCD x6. PD.\n- L2 (5/2023 - 1/2026): KCd. PD.\n- L3 (2/2026 - present): DRd (daratumumab + lenalidomide + dex). Started 2/22/2026 after extensive discussion of risk/benefit given renal status. Lenalidomide dose-reduced to 10mg given CKD (CrCl ~30). Patient has now received 2.5 cycles.\n\nResponse to date: M-spike trending DOWN (was 2.4 g/dL pre-tx, now 1.6 g/dL at C2). sFLC ratio improving. No new bone disease on recent imaging. EARLY PARTIAL RESPONSE.\n\nLENALIDOMIDE STATUS: now EXPOSED (since 2/22/26), but currently RESPONDING. Not refractory. Has not progressed on lenalidomide.\n\nTolerance: Pt tolerating reduced-dose len with G-CSF support. ANC was nadir 0.8 after C1, recovered with filgrastim. No infections. Cr stable at 1.7.\n\nECOG 1. Independent ADLs. Wife well.\n\nLabs 5/6/26: Hgb 10.6, ANC 1.9 (post-G-CSF), plt 95. Cr 1.7 CrCl ~30. M-spike 1.6, sFLC kappa 65.\n\nA/P: 73M r/r MM on L3 DRd, early PR, tolerating. Continue DRd. Re-image at C4. Re-assess CAR-T candidacy IF/WHEN progression on lenalidomide-containing regimen occurs."
+    },
+    {
+      "doc_type": "treatment_history",
+      "date": "2026-05-08",
+      "author": "auto-generated",
+      "content": "L1 (6/2022-4/2023): VCD. PD.\nL2 (5/2023-1/2026): KCd. PD.\nL3 (2/22/2026-current): DRd. Best response so far: PR (C2). Ongoing.\n\nPRIOR LINES: 3 (or 2 + ongoing third)\nPI: bortezomib, carfilzomib\nIMID: lenalidomide (FIRST EXPOSURE — current line)\nANTI-CD38: daratumumab (current line)\nLEN STATUS: EXPOSED but RESPONDING — not yet refractory\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\nAUTOSCT: declined"
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "dataset": "CARTITUDE-4 Eligibility Demo Patients (Synthetic Multiple Myeloma)",
+  "generated": "2026-04-24",
+  "disclaimer": "All patients, names, MRNs, dates, and clinical details are synthetic. No real PHI. Created for hackathon demonstration only.",
+  "schema_alignment": "Patients are structured to align with BioSure ghost-patient schema (claims-data backbone) plus unstructured clinical document bundles for AI eligibility validation.",
+  "target_trial": "CARTITUDE-4 (cilta-cel / Carvykti, 2L-4L MM, lenalidomide-refractory)",
+  "patients": [
+    {
+      "patient_id": "MM-001",
+      "demographics": {"age": 64, "sex": "F", "mrn": "SYN-MM-100182"},
+      "ghost_patient_status": "Identified by claims algorithm — 2 prior lines, len-refractory by claims sequence, no Carvykti claim",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "Classic CARTITUDE-4 candidate. IgG kappa MM dx 2022, after RVd induction + autoSCT + len maintenance (1 line) and DRd at relapse (2 lines). Progressed on len maintenance = len-refractory. ECOG 1, organ function intact, no exclusions.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2025-11-10",
+          "author": "S. Chen, MD — Hematopathology",
+          "content": "SPECIMEN: BM aspirate + core bx, R PSIS\n\nCLIN HX: 64F w/ MM dx 2022, on DRd, rising M-protein, evaluate response.\n\nGROSS: aspirate cellular w/ plasma cells visible.\n\nMICRO: hypercellular marrow ~70%, plasma cells comprise 35-40% by morphology, atypical features (binucleate forms, prominent nucleoli), abnormal sheets and clusters. CD138 IHC confirms plasma cell expansion ~38%.\n\nFLOW: kappa-restricted CD138+ CD38+ CD56+ CD45dim plasma cell population.\n\nCYTOGENETICS (FISH): t(11;14) POSITIVE. del(13q) present. del(17p) NEGATIVE. 1q21 gain present.\n\nDX: INVOLVEMENT BY MULTIPLE MYELOMA, kappa light-chain restricted, ~38% PC. Standard-risk cytogenetics with t(11;14) and 1q21 gain (intermediate risk by some classifications)."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-02-04",
+          "author": "M. Rodriguez, MD — Heme/Onc",
+          "content": "64F MM IgG kappa, dx 4/2022. ISS-II at dx (B2M 4.2, alb 3.6). Standard-risk cyto.\n\nTX HX:\n- 5/2022 - 9/2022: VRd induction x4 (bortezomib weekly + lenalidomide 25mg + dex)\n- 10/2022: stem cell collection (4.8 x10^6 CD34/kg)\n- 11/15/2022: autoSCT (Mel-200) — uncomplicated, engraftment d+12\n- 1/2023 - 5/2024: lenalidomide 10mg maintenance — sCR through 12/2023, then biochemical PD 4/2024 (rising M-spike) [LINE 1 — induction + autoSCT + maintenance counted as one line per IMWG]\n- 5/2024: PD on len maintenance — last len dose 5/3/24, M-spike rose from undetectable to 0.8 g/dL by 5/2024 = LENALIDOMIDE-REFRACTORY\n- 6/2024 - 11/2025: DRd (daratumumab + lenalidomide + dex). Response: VGPR by C4, then biochemical PD 10/2025 with new M-spike 1.2 g/dL. [LINE 2]\n- 11/2025: BM bx confirms persistent dz. Now r/r MM after 2 prior lines, len-refractory.\n\nLabs 2/2/26: Hgb 10.1, ANC 2.4, plt 142. Cr 0.9, CrCl ~78. Tbili 0.6, ALT 24, AST 28. Calcium 9.4. M-spike 1.4 g/dL (IgG kappa). sFLC kappa 95 mg/L, lambda 12 mg/L, ratio 7.9. UPEP: 240 mg/24hr.\n\nECOG 1. Walks 2 mi daily, working part-time as accountant. No bone pain currently. Husband's caregiver is supportive.\n\nPMH: HTN, hyperlipidemia. No DM. No CAD. NKDA.\n\nHep panel 1/2026: HBsAg neg, HBcAb neg. HCV Ab neg. HIV neg.\n\nEcho 1/15/26: LVEF 58%, no significant valve dz.\n\nA/P: r/r MM after 2 prior lines, lenalidomide-refractory. Excellent CAR-T candidate. Refer cell therapy. No prior BCMA tx. No alloSCT. AutoSCT was 2022 (allowed). MRI brain pending."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-02-04",
+          "author": "auto-generated",
+          "content": "MM TX HX:\n- LINE 1 (5/2022 - 5/2024): VRd induction x4 → autoSCT (Mel-200) 11/15/22 → lenalidomide maintenance through 5/2024. Best response sCR. PD on len 5/2024. Discontinuation: PD.\n- LINE 2 (6/2024 - 11/2025): DRd (dara + len + dex). Best response VGPR. PD 10/2025.\n\nLINE COUNT: 2 prior lines.\nLENALIDOMIDE STATUS: REFRACTORY (PD on len maintenance 5/2024 + on DRd through 11/2025)\nPI EXPOSURE: bortezomib (line 1)\nIMID EXPOSURE: lenalidomide (lines 1 + 2)\nANTI-CD38 EXPOSURE: daratumumab (line 2)\nPRIOR BCMA TX: NONE\nPRIOR SCT: AUTOLOGOUS (1) — Mel-200 conditioning 11/15/22. NO ALLOGENEIC.\nPRIOR CAR-T: NONE."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-002",
+      "demographics": {"age": 71, "sex": "M", "mrn": "SYN-MM-100295"},
+      "ghost_patient_status": "Identified by claims algorithm — 3 prior lines, no Carvykti",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "3 prior lines incl PI/IMiD/anti-CD38, len-refractory on most recent regimen. Older but functional, adequate organ function.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-01-08",
+          "author": "A. Patel, MD",
+          "content": "BM bx: 45% plasma cells by IHC (CD138+). Lambda light chain restricted. FISH: del(13q), 1q21 amp, no t(4;14), no t(14;16), no del(17p). Standard-intermediate risk.\n\nDX: PERSISTENT MULTIPLE MYELOMA, lambda light-chain, 45% PC."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-12",
+          "author": "J. Okafor, MD",
+          "content": "71M IgG lambda MM, dx 3/2020. ISS-II.\n\nTREATMENT HISTORY:\n- LINE 1 (4/2020 - 8/2021): RVd x4 → autoSCT 9/2020 (Mel-200) → len maintenance 10mg. PD 8/2021 (M-spike 1.5 -> 2.8).\n- LINE 2 (9/2021 - 6/2023): KRd (carfilzomib + len + dex) x12 cycles. Best response VGPR. PD 6/2023.\n- LINE 3 (7/2023 - 12/2025): Dara-Pd (daratumumab + pomalidomide + dex). Best response PR. PD 12/2025 — rising M-spike + new lytic lesion L iliac.\n- 1/2026: BM bx confirms refractory dz. POMALIDOMIDE-refractory currently. Lenalidomide-refractory established at end of line 1 and again at line 2.\n\nNote: DOES NOT meet 4L criteria (only 3 prior lines). Eligible for CARTITUDE-4 (1-3 prior lines) — at the upper edge but qualifying.\n\nECOG 1. Lives alone, drives, plays cards weekly. Some bone pain controlled w/ scheduled APAP + occasional oxycodone.\n\nPMH: HTN, BPH, prior melanoma in situ (2018, excised, NED 8 yrs).\n\nLabs 3/10/26: Hgb 9.8, ANC 1.6, plt 88. Cr 1.4 CrCl ~52. LFTs WNL. Calcium 9.8.\n\nM-protein 2.1 g/dL IgG lambda. sFLC: lambda 180 mg/L, kappa 8, ratio 0.04 (abnormal).\n\nHep/HIV serologies neg 12/25.\n\nEcho: EF 50%.\n\nA/P: r/r MM after 3 prior lines incl PI, IMiD x2, anti-CD38. Len-refractory. Adequate function. Candidate for CARTITUDE-4 / cilta-cel. Refer."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-12",
+          "author": "auto-generated",
+          "content": "TX HX:\n- L1 (4/2020-8/2021): RVd → autoSCT → len maint. PD on len.\n- L2 (9/2021-6/2023): KRd. PD.\n- L3 (7/2023-12/2025): Dara-Pd. PD.\n\nPRIOR LINES: 3\nPI EXPOSURE: bortezomib, carfilzomib\nIMID EXPOSURE: lenalidomide, pomalidomide\nANTI-CD38: daratumumab (L3)\nLEN-REFRACTORY: YES\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO. AutoSCT 9/2020.\nPRIOR CAR-T: NONE\nOTHER MALIGNANCY: melanoma in situ 2018 — excised, NED 8 yrs (not exclusionary, >3 yr remission, in-situ exempt)"
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-003",
+      "demographics": {"age": 58, "sex": "F", "mrn": "SYN-MM-100417"},
+      "ghost_patient_status": "Identified by claims — 2 prior lines",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "High-risk cytogenetics (t(4;14), del17p) with 2 prior lines incl RVd induction (counts as 1 line w/ autoSCT and maintenance) and KRd at relapse. Len-refractory. Aggressive disease but eligibility intact.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-01-22",
+          "author": "R. Goldstein, MD",
+          "content": "BM bx: hypercellular w/ 60% plasma cell infiltrate. CD138+ plasma cell sheets, atypical w/ binucleate forms. Kappa restricted.\n\nFISH PANEL: t(4;14) POSITIVE. del(17p) POSITIVE (~30% of plasma cell nuclei). 1q21 gain present. del(13q) present.\n\nDX: PERSISTENT MULTIPLE MYELOMA, HIGH-RISK CYTOGENETICS [t(4;14)+, del(17p)+]. 60% plasma cells."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-25",
+          "author": "L. Tanaka, MD",
+          "content": "58F IgG kappa MM dx 6/2023. ISS-III at dx (B2M 6.8, alb 2.9). High-risk cyto: t(4;14)+, del(17p)+. Aggressive course.\n\nTX HX:\n- L1 (7/2023-1/2025): Dara-RVd induction x4 → autoSCT 11/2023 (Mel-200) → Dara-R maintenance (D+R every 4wks). Best response VGPR. PD 1/2025 with rapid M-spike rise + new EMD chest wall lesion.\n- L2 (2/2025-1/2026): KRd (carfilzomib + len + dex) x12 cycles. Initial PR at C4 then SD then PD by C12 (1/2026). M-spike rising despite tx.\n\nDz now refractory. LEN-REFRACTORY: yes (PD on Dara-R maintenance L1 + on KRd L2).\n\nECOG 1. Working full-time as nurse, slightly fatigued. No active bone pain on bisphosphonate.\n\nPMH: hypothyroid (Hashimoto's, on levothyroxine — does NOT count as systemic immunosuppression).\n\nLabs: Hgb 9.4 (transfused 1u 3/22, now 10.6), ANC 1.3, plt 96. Cr 1.0 CrCl ~74. LFTs WNL. Ca 10.2.\n\nM-protein 3.2 g/dL. sFLC kappa 280 mg/L. Plasmacytoma chest wall 4cm by PET.\n\nHep/HIV neg.\n\nEcho 3/15: EF 52% (down from 60% pre-K, mild K-related cardiotox; no overt HF).\n\nA/P: high-risk r/r MM, 2 prior lines, urgent need for new tx. CAR-T appropriate. Note: Hashimoto's on levothyroxine = thyroid replacement only, NOT immunosuppression — does NOT exclude. Refer cell therapy expedited."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-25",
+          "author": "auto-generated",
+          "content": "PRIOR LINES: 2\nL1 (7/2023-1/2025): Dara-RVd → autoSCT → Dara-R maint\nL2 (2/2025-1/2026): KRd\n\nLEN-REFRACTORY: YES (L1 maint + L2)\nPI: bortezomib, carfilzomib\nIMID: lenalidomide\nANTI-CD38: daratumumab (L1)\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\nAUTOIMMUNE: Hashimoto's thyroiditis on levothyroxine ONLY (thyroid replacement, not immunosuppression — see EXC-06 pitfall)"
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-004",
+      "demographics": {"age": 67, "sex": "M", "mrn": "SYN-MM-100533"},
+      "ghost_patient_status": "Identified by claims — 1 prior line",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "Single prior line (RVd + autoSCT + maintenance counts as 1) with progression on len maintenance = len-refractory. Eligible at 2L per CARTITUDE-4 expanded label.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-28",
+          "author": "K. Nguyen, MD",
+          "content": "BM bx: 30% PC, kappa restricted. FISH: standard risk, t(11;14) negative, no high-risk markers.\n\nDX: PERSISTENT MULTIPLE MYELOMA, IgA kappa, 30% PC."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-30",
+          "author": "P. Mehta, MD",
+          "content": "67M IgA kappa MM dx 8/2023. ISS-II.\n\nTX HX:\n- LINE 1 (9/2023 - 2/2026): VRd induction x4 → autoSCT 1/2024 (Mel-200) → lenalidomide maintenance 10mg starting 4/2024 → biochemical PD 2/2026 (M-spike rising on routine surveillance).\n  -- Per IMWG: induction + autoSCT + maintenance = 1 line of therapy.\n  -- PD occurred ON lenalidomide maintenance → LENALIDOMIDE-REFRACTORY.\n\nDz: 2L setting now. PRIOR LINES: 1.\n\nNote: this is the population CARTITUDE-4 was designed for (1-3 prior lines, len-refractory). Pt qualifies cleanly.\n\nECOG 0. Works as engineer, exercises 4x/wk. No bone pain. No anemia symptoms.\n\nPMH: GERD on omeprazole, mild dyslipidemia.\n\nLabs 3/28: Hgb 12.4, ANC 3.1, plt 198. Cr 1.0, CrCl ~85. LFTs WNL.\n\nM-protein IgA kappa 1.8 g/dL. sFLC kappa 120 mg/L, ratio 9.\n\nHep/HIV neg.\n\nEcho: EF 60%.\n\nA/P: 2L MM, len-refractory after RVd→auto→len. Excellent CAR-T candidate. Refer cilta-cel evaluation."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-30",
+          "author": "auto-generated",
+          "content": "L1 (9/2023-2/2026): VRd → autoSCT (1/2024, Mel-200) → len maintenance through 2/2026 [single line per IMWG]\n\nPRIOR LINES: 1\nLEN-REFRACTORY: YES (PD on len maint 2/2026)\nPI: bortezomib (L1)\nIMID: lenalidomide (L1)\nANTI-CD38: NONE\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\nAUTOSCT: 1/2024 (allowed)"
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-005",
+      "demographics": {"age": 73, "sex": "M", "mrn": "SYN-MM-100621"},
+      "ghost_patient_status": "Flagged by claims algorithm — 2 prior lines, no Carvykti",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "easy",
+      "expected_reasoning": "MAGIC CASE — claims algorithm flagged this patient as a ghost candidate, but clinical data reveals he is LENALIDOMIDE-NAIVE. He had VCD induction (no len) then KCd at relapse. Without len exposure, cannot be len-refractory → fails CARTITUDE-4 INC-05. Demonstrates why claims-only ghost identification is incomplete.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-01-15",
+          "author": "M. Abramowitz, MD",
+          "content": "BM bx: 40% PC, kappa restricted. FISH: del(13q), no high-risk.\n\nDX: PERSISTENT MULTIPLE MYELOMA, 40% PC."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-08",
+          "author": "R. Singh, MD",
+          "content": "73M IgG kappa MM dx 5/2022. ISS-II.\n\nTX HX (transferred care from rural community oncologist 2024, len was avoided due to pt's strong renal disease history):\n- L1 (6/2022 - 4/2023): VCD (bortezomib + cyclophosphamide + dex) x6 cycles. Pt was lenalidomide-NAIVE, declined autoSCT (frail/older). Best response PR. PD 4/2023.\n- L2 (5/2023 - 1/2026): KCd (carfilzomib + cyclophosphamide + dex). Best response VGPR. PD 12/2025 confirmed BM bx 1/2026.\n\nLENALIDOMIDE STATUS: NEVER EXPOSED. Pt has CKD3 (Cr baseline 1.5) and was managed without IMiDs at community oncologist's preference.\n\nNo doxorubicin... wait, this is myeloma not lymphoma. Standard MM tx, no anthracyclines.\n\nECOG 1. Lives w/ wife, mostly independent.\n\nPMH: CKD3 (Cr baseline 1.5, eGFR ~38), HTN, DM2.\n\nLabs: Hgb 10.0, ANC 2.0, plt 110. Cr 1.7 (slight bump), CrCl ~31 (BELOW threshold of 40). LFTs WNL.\n\nA/P: r/r MM, 2 prior lines, BUT: (1) lenalidomide-NAIVE — fails CARTITUDE-4 INC-05; (2) CrCl ~31 — also fails INC-10. Patient was identified as 'ghost' by claims algorithm but clinical review reveals two disqualifications. Discuss alternative options: Pomalidomide-based tx (would also establish IMiD exposure if needed for future trial entry), or KarMMa / ide-cel evaluation may not require lenalidomide-refractoriness specifically. Will explore alternatives w/ pt."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-08",
+          "author": "auto-generated",
+          "content": "L1 (6/2022-4/2023): VCD\nL2 (5/2023-1/2026): KCd\n\nPRIOR LINES: 2 (claims sees 2 lines correctly)\nPI: bortezomib, carfilzomib\nIMID: NONE — patient is LENALIDOMIDE-NAIVE\nANTI-CD38: NONE\nLEN-REFRACTORY: NO (never received lenalidomide)\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\nAUTOSCT: declined\n\nNOTE: claims-data ghost-patient algorithm correctly counted 2 prior lines and absence of Carvykti, but did not recognize the patient is lenalidomide-naive — a CARTITUDE-4 disqualifier visible only in clinical narrative."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-006",
+      "demographics": {"age": 61, "sex": "F", "mrn": "SYN-MM-100744"},
+      "ghost_patient_status": "Flagged by claims — 3 prior lines, no Carvykti",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "MAGIC CASE — claims sees 3 prior lines and no Carvykti. But clinical record shows prior IDE-CEL (Abecma) BCMA CAR-T in 9/2024 at outside center. Prior BCMA tx is exclusion EXC-01. Demonstrates 'prior CAR-T buried in old records' failure mode that claims often miss because the procedure was billed under outside-system facility codes.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-20",
+          "author": "S. Chen, MD",
+          "content": "BM bx: 25% PC, kappa restricted. CD138+, BCMA expression preserved by IHC (still detectable despite prior anti-BCMA tx).\n\nDX: RECURRENT MULTIPLE MYELOMA. BCMA antigen retained on plasma cells."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-30",
+          "author": "L. Tanaka, MD",
+          "content": "61F IgG kappa MM, dx 2/2020 outside, transferred to us 2025.\n\nTX HX (compiled from outside records + pt history):\n- L1 (3/2020-9/2021): RVd → autoSCT 8/2020 → len maint. PD 9/2021.\n- L2 (10/2021-7/2024): DRd. Best response VGPR. PD 7/2024.\n- L3 (8/2024 - present): Pomalidomide + dexamethasone (Pd) bridging therapy.\n  ** 9/15/2024: IDE-CEL (Abecma) infusion at OutsideHosp (Cedar Valley Cancer Center). Conditioning flu/cy. Per outside d/c summary: best response VGPR by d+30 PET, CRS grade 2 (treated tocilizumab), no ICANS. **\n  -- Maintained response approx 8 months → biochemical progression 6/2025.\n- L4 (7/2025 - 1/2026): teclistamab (BCMA bispecific) on outside trial. PR initially, then PD 1/2026.\n\nNow: heavily pre-treated. Prior CAR-T (ide-cel) AND prior bispecific (teclistamab) — both BCMA-directed.\n\nNote: claims algorithm at our institution counted 3 prior lines (L1-L3 induction phase) but missed:\n  (a) the ide-cel infusion (billed at outside hosp, not in our claims system), and\n  (b) the teclistamab (clinical trial, no commercial billing).\n\nECOG 1.\n\nPMH: HTN.\n\nLabs: Hgb 9.6, ANC 1.5, plt 78. Cr 1.0. M-protein 2.0 g/dL.\n\nA/P: heavily-pretreated MM with prior BCMA CAR-T (ide-cel) AND prior BCMA bispecific (teclistamab). NOT a candidate for CARTITUDE-4 or any BCMA-directed therapy due to EXC-01. Consider GPRC5D-targeted (talquetamab) or non-BCMA approaches (cevostamab investigational). Refer to CC."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-30",
+          "author": "auto-generated + outside records reconciliation",
+          "content": "TX HX (reconciled from internal + outside):\n- L1 (3/2020-9/2021): RVd → autoSCT → len maint\n- L2 (10/2021-7/2024): DRd\n- L3 (8/2024-): Pd → ide-cel infusion 9/15/2024 (OUTSIDE)\n- L4 (7/2025-1/2026): teclistamab (BCMA bispecific, outside trial)\n\nPRIOR LINES: 4\nLEN-REFRACTORY: YES\nPI/IMID: bortezomib, len, pom\nANTI-CD38: dara\n** PRIOR BCMA-DIRECTED TX: YES — ide-cel 9/15/2024 + teclistamab 2025 ** [EXCLUSION EXC-01]\nPRIOR ALLOSCT: NO\nAUTOSCT: 8/2020 (allowed)\n\nGHOST-PATIENT NOTE: claims-only algorithm flagged this patient because outside-hospital ide-cel infusion not in internal claims; demonstrates value of clinical-document validation."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-007",
+      "demographics": {"age": 56, "sex": "M", "mrn": "SYN-MM-100856"},
+      "ghost_patient_status": "Flagged by claims — 2 prior lines",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "Plasma cell leukemia (PCL) — peripheral blood plasma cells 12% on recent CBC differential. Per 2021 IMWG redefinition, PCL = >=5% circulating PCs. EXC-03 violation.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-15",
+          "author": "D. Ramachandran, MD",
+          "content": "BM bx: 80% plasma cell infiltrate, sheets effacing normal marrow. Atypical immature plasmablastic forms. Kappa restricted.\n\nFISH: t(11;14)+, del(17p)+, 1q21 amp.\n\nPB SMEAR (concurrent, 2/14/26): plasma cells 12% of WBC differential (200-cell count). Confirmed by flow cytometry on PB: kappa-restricted CD138+ plasma cells, 11% of mononuclear cells.\n\nDX: PLASMA CELL LEUKEMIA (secondary, transformation from prior MM). Per 2021 IMWG criteria (>=5% circulating PCs)."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-05",
+          "author": "J. Okafor, MD",
+          "content": "56M IgG kappa MM dx 11/2022.\n\nTX HX:\n- L1 (12/2022-3/2024): Dara-RVd induction x4 → autoSCT 6/2023 → Dara-R maintenance. PD 3/2024.\n- L2 (4/2024-2/2026): KPd (carfilzomib + pom + dex). Initial PR, then progressive. By 1/2026 rapid clinical decline.\n\n2/14/26: BM bx + PB → secondary PCL diagnosed.\n\nECOG 1-2 (declining last 4 wks). Hospitalized 2/15-2/22 for hypercalcemia + pain crisis.\n\nLabs: Hgb 7.8 (transfused), ANC 1.2, plt 62. Cr 2.0. Calcium 12.4 (treated). LDH 580 (highly elevated).\n\nA/P: secondary plasma cell leukemia. Aggressive disease. PCL EXCLUDED from CARTITUDE-4 (EXC-03). Discuss PCL-specific protocols, salvage tx. Hospice consult also placed."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-05",
+          "author": "auto-generated",
+          "content": "L1 (12/2022-3/2024): Dara-RVd → auto → Dara-R maint\nL2 (4/2024-2/2026): KPd\n\nPRIOR LINES: 2\nLEN-REFRACTORY: YES\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\n\nDISEASE: secondary PLASMA CELL LEUKEMIA (PB plasma cells 12%, 2/14/2026) — EXC-03 violation."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-008",
+      "demographics": {"age": 70, "sex": "M", "mrn": "SYN-MM-100968"},
+      "ghost_patient_status": "Flagged by claims — 2 prior lines",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "medium",
+      "expected_reasoning": "ECOG 3-4 inferred from narrative — bedbound, requires assistance, lost 30 lbs, multiple recent hospitalizations. INC-06 fail. Multiple comorbidities also concerning.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-08",
+          "author": "K. Nguyen, MD",
+          "content": "BM bx: 50% PC. DX: persistent MM."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-22",
+          "author": "M. Rodriguez, MD",
+          "content": "70M MM dx 1/2022. 2 prior lines (RVd→auto→len maint then DPd). PD 1/2026.\n\nFamily mtg today. Pt brought in via wheelchair by son. Has been mostly bed-bound x 8 wks. Lost 30 lbs in 4 months. Two recent admits for fall + UTI (1/2026) and another for pneumonia (3/1-3/10/2026) requiring brief ICU stay for sepsis.\n\nFunctional: cannot walk to bathroom alone, requires son's help w/ all ADLs incl bathing/feeding. Spends day in bed or recliner. Sleeps most of the day. Conversation slow.\n\nECOG: not documented in structured field this visit. Last documented 1/2026 was '1' but clearly worse now.\n\nROS: anorexia, fatigue, intermittent confusion (per son). Pain controlled w/ scheduled oxycodone.\n\nPMH: CHF (EF 38%, baseline), CKD3 (Cr 1.7), prior CVA 2024 (residual mild L weakness), DM2 (insulin), recent sepsis.\n\nLabs 3/20: Hgb 8.4 (chronic transfusion need), ANC 0.9, plt 65. Cr 2.1, CrCl ~28. Albumin 2.6.\n\nM-spike 2.4.\n\nA/P: profoundly deconditioned r/r MM. Functional status well below ECOG 1 (per narrative descriptors: bed-bound, requires ADL assist, recent ICU). NOT a CAR-T candidate. Multiple comorbidities (low EF, CKD-stage-3 trending worse, recent sepsis, prior stroke). Discussed goals of care w/ family. Hospice referral placed; comfort focus."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-22",
+          "author": "auto-generated",
+          "content": "L1: RVd → autoSCT → len maint. L2: DPd.\nPRIOR LINES: 2\nLEN-REFRACTORY: YES\nPRIOR BCMA: NONE\n\nFUNCTIONAL STATUS (narrative): bed-bound, requires caregiver for ADLs, recent sepsis ICU admit, lost 30 lbs. Consistent w/ ECOG 3-4. ECOG not in structured field current visit.\n\nADDITIONAL FAILS: CrCl 28 (below 40, INC-10 fail), EF 38% (below 45%, INC-12 fail), recent stroke 2024 (within 2 yrs but >6 mo so EXC-10 not met, but cumulative concerns)."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-009",
+      "demographics": {"age": 63, "sex": "F", "mrn": "SYN-MM-101082"},
+      "ghost_patient_status": "Flagged by claims — 1 prior line, no Carvykti",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — line counting from free text. Patient had RVd induction, autoSCT 'transplant', and then 'continued lenalidomide' for maintenance. The treatment history field is sparse ('see notes') because she transferred from outside oncologist. Agent must read narrative and recognize: induction + autoSCT + maint = ONE line, and PD on len = len-refractory. Eligible 2L.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-03-01",
+          "author": "S. Chen, MD",
+          "content": "BM bx: 28% PC, lambda restricted. Standard risk FISH.\n\nDX: PERSISTENT MM, IgA lambda."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-04-02",
+          "author": "P. Mehta, MD",
+          "content": "New patient consult — transferred care from Dr. Whitford (community oncologist who recently retired). Pt transferred to our institution 3/2026.\n\n63F MM IgA lambda dx 8/2023 per pt and outside records.\n\nTX HX per pt account + correspondence from Dr. Whitford's clinic:\n\nInitially treated with combination therapy starting fall 2023 — bortezomib, lenalidomide, and dexamethasone given over four cycles through early winter 2023. Following good response, pt underwent stem cell collection then went to UCMC for transplant in February 2024 (high-dose melphalan conditioning, autologous reinfusion). Recovery uncomplicated.\n\nAfter transplant pt was placed on continued lenalidomide as maintenance therapy at 10mg daily, taken 21 of 28 days. She tolerated this well for about 18 months until biochemical relapse was noted on routine labs in late 2025 — M-spike rose from undetectable to 1.2 g/dL while still ON lenalidomide. Maintenance was discontinued 12/2025 once progression was confirmed by repeat marrow.\n\nNo other systemic therapy received. She came to us 3/2026 to discuss next options.\n\nNote: structured tx-history field in our EHR shows '(see notes)' since outside data did not import. Per IMWG and CARTITUDE-4 conventions: induction + autoSCT + maintenance = ONE line of therapy. Patient is at 2L decision now.\n\nECOG 0-1. Yoga instructor part-time, very active. No bone pain currently.\n\nPMH: hypothyroid (Hashimoto's, levothyroxine — thyroid replacement only, NOT immunosuppression), G2P2.\n\nLabs 4/1/26: Hgb 11.2, ANC 2.6, plt 165. Cr 0.8, CrCl ~83. LFTs WNL. Calcium normal. M-protein 1.4 g/dL IgA lambda.\n\nHep/HIV neg.\n\nEcho: EF 60%.\n\nA/P: 2L MM, lenalidomide-refractory after 1 prior line (RVd+autoSCT+len maint, PD on maint). Excellent CARTITUDE-4 candidate. Refer cell therapy."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-04-02",
+          "author": "auto-generated from EHR",
+          "content": "STRUCTURED ONCOLOGY TX LOG: (see notes)\n\nDATA NOT TRANSFERRED FROM OUTSIDE PRACTICE. SEE PROGRESS NOTES FOR FREE-TEXT TX HISTORY.\n\nPRIOR SCT (per outside records): autologous SCT 2/2024 at UCMC.\nPRIOR ALLOSCT: NO\nOTHER CANCER: NONE."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-010",
+      "demographics": {"age": 59, "sex": "M", "mrn": "SYN-MM-101194"},
+      "ghost_patient_status": "Flagged by claims — 2 prior lines, no Carvykti",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — auto vs allo SCT distinction. Patient had AUTOLOGOUS SCT (allowed). Note also mentions a sibling who received an alloSCT for AML. Agent must NOT confuse the patient's auto with the sibling's allo. Personal history is autoSCT only.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-20",
+          "author": "A. Patel, MD",
+          "content": "BM bx: 35% PC, kappa restricted. FISH: standard risk.\n\nDX: persistent MM."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-25",
+          "author": "R. Singh, MD",
+          "content": "59M IgG kappa MM dx 9/2022.\n\nTX HX:\n- L1 (10/2022-1/2025): RVd → autoSCT 5/2023 (Mel-200 conditioning, AUTOLOGOUS — patient was own donor, his OWN stem cells reinfused) → len maintenance. PD 1/2025.\n- L2 (2/2025-1/2026): DPd. PR then PD.\n\nFAMILY HX: notable — younger brother (age 55) underwent allogeneic stem cell transplant in 2018 at MD Anderson for AML (matched unrelated donor), in remission since. Pt frequently confuses his own auto with brother's allo when telling history. Confirmed via direct review of UCMC records: PT's transplant 5/2023 was AUTOLOGOUS, his own peripheral blood stem cells collected 4/2023 mobilized w/ G-CSF + plerixafor.\n\nECOG 1. Walks daily, works as architect part-time.\n\nPMH: HTN, GERD.\n\nLabs: Hgb 11.5, ANC 2.8, plt 188. Cr 1.0. M-spike 1.6.\n\nHep/HIV neg.\n\nEcho: EF 58%.\n\nA/P: r/r MM, 2 prior lines, len-refractory. CAR-T candidate. CONFIRMING: prior transplant was AUTOLOGOUS (self), not allogeneic. Family history of brother's allo SCT for AML is NOT relevant to patient's eligibility. No alloSCT in patient. Refer cilta-cel."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-25",
+          "author": "auto-generated",
+          "content": "L1: RVd → autoSCT 5/2023 (AUTOLOGOUS, self-donor) → len maint\nL2: DPd\n\nPRIOR LINES: 2\nLEN-REFRACTORY: YES\nPRIOR BCMA: NONE\nPRIOR ALLOSCT (PATIENT): NO. AutoSCT 5/2023 ONLY.\nFAMILY HX: brother had alloSCT for AML 2018 — not relevant to pt eligibility."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-011",
+      "demographics": {"age": 67, "sex": "F", "mrn": "SYN-MM-101307"},
+      "ghost_patient_status": "Flagged by claims — 2 prior lines, no Carvykti",
+      "expected_label": "ELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — len-intolerance vs len-refractory distinction. Patient stopped lenalidomide twice for cytopenias, NOT progression — this is NOT len-refractory. BUT: she did progress on a subsequent dara-len-dex regimen (DRd) where she remained on len. So she IS len-refractory, just not on her first len exposure. Agent must trace the timeline carefully.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-01-30",
+          "author": "M. Abramowitz, MD",
+          "content": "BM bx: 32% PC, lambda restricted.\n\nDX: persistent MM."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-15",
+          "author": "L. Tanaka, MD",
+          "content": "67F IgG lambda MM dx 6/2021. ISS-II.\n\nDETAILED TX TIMELINE:\n\n- L1a induction: 7/2021-11/2021 — VRd x4 (bortezomib + lenalidomide + dex). Lenalidomide had to be reduced for cytopenias and ultimately HELD for grade 4 neutropenia at end of C4.\n- L1 autoSCT: 12/2021 (Mel-200), uncomplicated.\n- L1 maintenance attempt: 3/2022 started lenalidomide 10mg maint. Within 6 weeks developed severe neutropenia (ANC 0.4) requiring G-CSF, then within 2 months developed pneumonia w/ recurrent admissions. Lenalidomide DISCONTINUED 5/2022 due to TOXICITY (not progression — M-spike was undetectable at that time, this was len INTOLERANCE).\n- 5/2022 - 9/2023: observation off therapy (single line still). PD finally 9/2023 with biochemical relapse + new lytic lesion T11.\n- L2 (10/2023-1/2026): DRd (daratumumab + lenalidomide + dex). Pt tolerated reduced-dose len (5mg) better w/ growth factor support. Remained on continuous DRd. Best response VGPR. Then biochemical progression on continuous DRd 12/2025 - 1/2026 (M-spike rising while on Dara + len). BM bx 1/30/26 confirmed. → THIS is the len-refractory event: PD on len-containing therapy DRd.\n\nKey distinction: \n  -- L1 maintenance discontinuation 5/2022 was for INTOLERANCE (cytopenias/infection), not progression.\n  -- L2 progression 1/2026 was on DRd while taking lenalidomide → meets refractory definition.\n\n→ PT IS LENALIDOMIDE-REFRACTORY (per L2 progression), even though L1 len discontinuation was for intolerance.\n\nECOG 1. Lives alone, drives, gardens.\n\nPMH: hypothyroid (Hashimoto's, levo only).\n\nLabs: Hgb 10.6, ANC 1.8 (chronic from prior cytopenias + dz), plt 102. Cr 1.0.\n\nHep/HIV neg. EF 58%.\n\nA/P: 2L MM, len-refractory (per L2 progression on DRd). Eligible for CARTITUDE-4. Refer."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-15",
+          "author": "auto-generated",
+          "content": "L1 (7/2021-9/2023): VRd → autoSCT (12/2021) → len maint (held 5/2022 for intolerance) → observation → PD 9/2023.\nL2 (10/2023-1/2026): DRd (continuous). Best response VGPR. PD 1/2026 ON THERAPY (len-refractory).\n\nPRIOR LINES: 2\nLEN-REFRACTORY: YES — PD on DRd 1/2026 while taking lenalidomide. (Note: L1 maintenance was discontinued for intolerance, not progression — this alone would NOT establish refractoriness.)\nLEN-INTOLERANT: ALSO YES (separate concept) — at L1 maint phase\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\nAUTOSCT: 12/2021"
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-012",
+      "demographics": {"age": 60, "sex": "F", "mrn": "SYN-MM-101421"},
+      "ghost_patient_status": "Flagged by claims — 2 prior lines, no Carvykti",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — autoimmune disease distinction. Patient has rheumatoid arthritis on methotrexate + adalimumab (Humira). RA on biologic = systemic immunosuppression = EXC-06 violation. Distinct from PT-003 (Hashimoto's on levo only) and from family-history-only cases.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-12",
+          "author": "K. Nguyen, MD",
+          "content": "BM bx: 30% PC, kappa restricted.\n\nDX: persistent MM."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-22",
+          "author": "J. Okafor, MD",
+          "content": "60F IgG kappa MM dx 8/2022.\n\nTX HX:\n- L1: RVd → autoSCT (3/2023) → len maint. PD 12/2024.\n- L2: DPd. PD 2/2026.\n\nLEN-REFRACTORY: YES.\n\nPMH: rheumatoid arthritis dx 2015, severe seropositive (RF+, anti-CCP+ high titer). Currently managed by Dr. Hwang (rheum) on methotrexate 15 mg PO weekly + adalimumab (Humira) 40mg SC q2 weeks. Has been on this combination since 2019 with good RA control. Pt also takes prednisone 5mg PO daily for joint flares (chronic low-dose). \n\nPER RHEUM (Hwang note 1/2026): Pt's RA has been STABLE on current biologic + DMARD regimen. Cannot stop immunosuppression — high risk of severe RA flare. Methotrexate would need to be held for any major procedure but adalimumab discontinuation has historically led to disease flare within 4-6 weeks.\n\nDiscussion at multidisciplinary tumor board: pt's ongoing systemic immunosuppression for active autoimmune disease (methotrexate + adalimumab biologic) is exclusionary for CAR-T per CARTITUDE-4 EXC-06 (active autoimmune disease requiring systemic immunosuppression within last 2 years — ongoing, not just within 2 yrs).\n\nECOG 1. Otherwise functional.\n\nPMH: RA (severe, on biologics) [SEE ABOVE], HTN.\n\nLabs: Hgb 10.4, ANC 2.0, plt 132. Cr 1.0.\n\nA/P: r/r MM, but excluded from CAR-T due to active autoimmune disease on systemic immunosuppression (RA on MTX + adalimumab). Cannot safely de-escalate immunosuppression per rheum. Discuss alternative options (talquetamab — bispecific, may be less risk; or alternative regimens). Refer to clinical trials specifically for autoimmune-permissive protocols if available."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-22",
+          "author": "auto-generated",
+          "content": "L1: RVd → autoSCT (3/2023) → len maint\nL2: DPd\n\nPRIOR LINES: 2\nLEN-REFRACTORY: YES\nPRIOR BCMA: NONE\n\nAUTOIMMUNE: rheumatoid arthritis dx 2015. CURRENT MEDS: methotrexate 15 mg weekly + adalimumab (Humira) 40mg q2wk + chronic prednisone 5mg daily. ACTIVE, ON BIOLOGIC + DMARD (systemic immunosuppression). Per EXC-06: this IS exclusionary (vs. Hashimoto's-on-levo which is not)."
+        }
+      ]
+    },
+    {
+      "patient_id": "MM-013",
+      "demographics": {"age": 75, "sex": "M", "mrn": "SYN-MM-101533"},
+      "ghost_patient_status": "Flagged by claims — 4 prior lines, no Carvykti (some claims systems include this as 'ghost' if the >3-line filter is loose)",
+      "expected_label": "INELIGIBLE",
+      "difficulty": "hard",
+      "expected_reasoning": "MAGIC CASE — too many prior lines for CARTITUDE-4. 4 prior lines exceeds CARTITUDE-4's max of 3. BUT — patient is potentially eligible for CARTITUDE-1 / 4L+ Carvykti label. Demonstrates the alternative-trial-routing capability: agent should mark INELIGIBLE for CARTITUDE-4 but suggest CARTITUDE-1 / 4L+ label.",
+      "documents": [
+        {
+          "doc_type": "bone_marrow_biopsy",
+          "date": "2026-02-25",
+          "author": "S. Chen, MD",
+          "content": "BM bx: 30% PC, kappa restricted. CD38 retained, BCMA expression preserved.\n\nDX: persistent MM, triple-class exposed."
+        },
+        {
+          "doc_type": "oncology_progress_note",
+          "date": "2026-03-28",
+          "author": "M. Rodriguez, MD",
+          "content": "75M IgG kappa MM dx 6/2019.\n\nTX HX (4 prior lines):\n- L1 (7/2019-2/2021): VRd → autoSCT 1/2020 → len maint. PD 2/2021.\n- L2 (3/2021-9/2022): KPd. PD.\n- L3 (10/2022-3/2024): isatuximab + Pd (Isa-Pd). PD.\n- L4 (4/2024-1/2026): selinexor + Pd. PD 1/2026 on imaging.\n\nTriple-class exposed (PI, IMiD, anti-CD38) and triple-class refractory (refractory to all three classes per most recent regimens).\n\nCARTITUDE-4 requires 1-3 prior lines — pt has 4 prior. INELIGIBLE for CARTITUDE-4.\n\nHOWEVER: CARTITUDE-1 (and the original FDA label for Carvykti) is for 4L+ patients with prior PI + IMiD + anti-CD38 mAb who have progressed on last therapy. Patient meets these criteria. Should be evaluated against CARTITUDE-1 / FDA 4L+ label criteria for cilta-cel.\n\nAlternative: ide-cel per KarMMa-3 may also be appropriate.\n\nECOG 1. Lives w/ wife, drives.\n\nPMH: HTN, BPH, mild renal impairment (CrCl ~58).\n\nLabs: Hgb 10.1, ANC 1.7, plt 92. Cr 1.4. EF 55%.\n\nNo prior BCMA tx. No alloSCT. AutoSCT 1/2020.\n\nA/P: triple-class refractory r/r MM after 4 prior lines. NOT eligible for CARTITUDE-4 (>3 lines). DOES qualify for CARTITUDE-1 / 4L+ Carvykti label or KarMMa-3 ide-cel. Refer cell therapy."
+        },
+        {
+          "doc_type": "treatment_history",
+          "date": "2026-03-28",
+          "author": "auto-generated",
+          "content": "L1: RVd → autoSCT → len maint\nL2: KPd\nL3: Isa-Pd\nL4: selinexor + Pd\n\nPRIOR LINES: 4\nLEN-REFRACTORY: YES\nPI EXPOSURE: bortezomib, carfilzomib\nIMID EXPOSURE: lenalidomide, pomalidomide\nANTI-CD38 EXPOSURE: isatuximab\nTRIPLE-CLASS EXPOSED + REFRACTORY: YES\nPRIOR BCMA: NONE\nPRIOR ALLOSCT: NO\n\nFAILS CARTITUDE-4 (>3 lines, INC-03).\nMEETS CARTITUDE-1 / 4L+ Carvykti label criteria (triple-class exposed, prior PI + IMiD + anti-CD38, refractory to last line).\nALSO meets KarMMa-3 ide-cel criteria."
+        }
+      ]
+    }
+  ]
+}
