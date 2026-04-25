@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.config import settings
 from backend.database import database
-from backend.routers import patients, hcos, contracts, eligibility
+from backend.routers import patients, hcos, contracts, eligibility, routing
 
 logging.basicConfig(
     level=logging.INFO,
@@ -62,6 +62,7 @@ app.include_router(patients.router)
 app.include_router(hcos.router)
 app.include_router(contracts.router)
 app.include_router(eligibility.router, prefix="/api/v1")
+app.include_router(routing.router, prefix="/api/v1")
 
 
 @app.get("/healthz")
