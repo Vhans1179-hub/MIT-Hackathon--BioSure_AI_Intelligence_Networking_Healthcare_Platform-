@@ -6,6 +6,14 @@ import logging
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# Load backend/.env into os.environ so libraries that read os.getenv directly
+# (e.g. AsyncOpenAI looking for OPENAI_API_KEY) see the values. pydantic-settings
+# already loads the same file into the Settings object, but does not push into
+# os.environ.
+load_dotenv(Path(__file__).parent / ".env")
+
 # Add parent directory to path for imports to work from both root and backend directory
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
