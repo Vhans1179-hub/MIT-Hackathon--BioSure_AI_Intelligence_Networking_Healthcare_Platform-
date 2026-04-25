@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Download, Search, AlertTriangle, Building2, MapPin, Loader2 } from 'lucide-react';
+import { Download, Search, AlertTriangle, Building2, MapPin, Loader2, Users } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -15,6 +15,14 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import { EligibilityDrawer } from '@/components/EligibilityDrawer';
 
 interface HCO {
   _id: string;
@@ -35,6 +43,19 @@ interface HCOStats {
   hco_count: number;
 }
 
+interface Patient {
+  _id: string;
+  patient_id: string;
+  age: number;
+  sex: string;
+  payer_type: string;
+  prior_lines: number;
+  treating_hco_id: string;
+  treating_hco_name: string;
+}
+
+const ELIGIBILITY_TRIAL_ID = 'CARTITUDE-4';
+
 const GhostRadar = () => {
   const [hcos, setHcos] = useState<HCO[]>([]);
   const [stats, setStats] = useState<HCOStats | null>(null);
@@ -44,6 +65,12 @@ const GhostRadar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [regionFilter, setRegionFilter] = useState('all');
   const [stateFilter, setStateFilter] = useState('all');
+
+  // Drill-through: HCO row click -> patient list dialog -> patient row click -> EligibilityDrawer
+  const [drilledHco, setDrilledHco] = useState<HCO | null>(null);
+  const [drilledPatients, setDrilledPatients] = useState<Patient[]>([]);
+  const [loadingPatients, setLoadingPatients] = useState(false);
+  const [openPatientId, setOpenPatientId] = useState<string | null>(null);
   
   // Fetch HCO data from backend
   useEffect(() => {
@@ -91,7 +118,36 @@ const GhostRadar = () => {
     
     fetchData();
   }, [regionFilter, stateFilter]);
-  
+
+  // Fetch patients for the drilled-into HCO
+  useEffect(() => {
+    if (!drilledHco) {
+      setDrilledPatients([]);
+      return;
+    }
+
+    const fetchPatients = async () => {
+      setLoadingPatients(true);
+      try {
+        const params = new URLSearchParams({
+          treating_hco_id: drilledHco.hco_id,
+          limit: '100',
+        });
+        const res = await fetch(`${getApiUrl(API_ENDPOINTS.patients.list)}?${params.toString()}`);
+        if (!res.ok) throw new Error('Failed to fetch patients');
+        const data = await res.json();
+        setDrilledPatients(data.patients || []);
+      } catch (err) {
+        console.error('Error fetching patients for HCO:', err);
+        setDrilledPatients([]);
+      } finally {
+        setLoadingPatients(false);
+      }
+    };
+
+    fetchPatients();
+  }, [drilledHco]);
+
   // Filter HCOs by search term (client-side)
   const filteredHCOs = useMemo(() => {
     if (!searchTerm) return hcos;
@@ -320,6 +376,9 @@ const GhostRadar = () => {
       <Card>
         <CardHeader>
           <CardTitle>HCO Rankings ({filteredHCOs.length} centers)</CardTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            Click an HCO row to drill into its treated patients and evaluate trial eligibility.
+          </p>
         </CardHeader>
         <CardContent>
           {filteredHCOs.length === 0 ? (
@@ -343,7 +402,11 @@ const GhostRadar = () => {
                 </TableHeader>
                 <TableBody>
                   {filteredHCOs.slice(0, 20).map((hco, index) => (
-                    <TableRow key={hco._id}>
+                    <TableRow
+                      key={hco._id}
+                      onClick={() => setDrilledHco(hco)}
+                      className="cursor-pointer hover:bg-blue-50 transition-colors"
+                    >
                       <TableCell className="font-medium">{index + 1}</TableCell>
                       <TableCell className="font-medium">{hco.name}</TableCell>
                       <TableCell>{hco.state}</TableCell>
@@ -368,6 +431,75 @@ const GhostRadar = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Drill-through dialog: list of patients treated at the selected HCO */}
+      <Dialog open={drilledHco !== null} onOpenChange={(open) => !open && setDrilledHco(null)}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Users className="w-5 h-5 text-blue-600" />
+              Patients at {drilledHco?.name}
+            </DialogTitle>
+            <DialogDescription>
+              {drilledHco?.state} · {drilledHco?.region} · {drilledHco?.treated_patients} treated ·{' '}
+              <span className="text-orange-600 font-medium">{drilledHco?.ghost_patients} ghost (untapped)</span>
+              <br />
+              Click a patient row to evaluate eligibility for {ELIGIBILITY_TRIAL_ID}.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="overflow-y-auto flex-1">
+            {loadingPatients ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <span className="ml-2 text-gray-600">Loading patients...</span>
+              </div>
+            ) : drilledPatients.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No patients found for this HCO.
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Patient ID</TableHead>
+                    <TableHead className="text-right">Age</TableHead>
+                    <TableHead>Sex</TableHead>
+                    <TableHead>Payer</TableHead>
+                    <TableHead className="text-right">Prior Lines</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {drilledPatients.map((p) => (
+                    <TableRow
+                      key={p._id}
+                      onClick={() => {
+                        setOpenPatientId(p.patient_id);
+                        setDrilledHco(null);
+                      }}
+                      className="cursor-pointer hover:bg-blue-50 transition-colors"
+                    >
+                      <TableCell className="font-mono font-medium">{p.patient_id}</TableCell>
+                      <TableCell className="text-right">{p.age}</TableCell>
+                      <TableCell>{p.sex}</TableCell>
+                      <TableCell>{p.payer_type}</TableCell>
+                      <TableCell className="text-right">{p.prior_lines}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Eligibility evaluation drawer */}
+      <EligibilityDrawer
+        patientId={openPatientId}
+        trialId={ELIGIBILITY_TRIAL_ID}
+        open={openPatientId !== null}
+        onClose={() => setOpenPatientId(null)}
+      />
     </div>
   );
 };

@@ -19,6 +19,7 @@ async def get_patients(
     region: Optional[str] = Query(None, description="Filter by region"),
     state: Optional[str] = Query(None, description="Filter by state (2-char code)"),
     payer_type: Optional[str] = Query(None, description="Filter by payer type"),
+    treating_hco_id: Optional[str] = Query(None, description="Filter by treating HCO ID"),
     min_age: Optional[int] = Query(None, ge=18, le=120, description="Minimum age"),
     max_age: Optional[int] = Query(None, ge=18, le=120, description="Maximum age"),
     limit: int = Query(100, ge=1, le=1000, description="Number of records to return"),
@@ -26,16 +27,18 @@ async def get_patients(
 ):
     """
     Get paginated list of patients with optional filtering.
-    
+
     Query parameters:
     - region: Filter by geographic region (West, South, Northeast, Midwest)
     - state: Filter by 2-character state code (e.g., CA, TX, FL)
     - payer_type: Filter by payer type (Commercial, Medicare Advantage, Medicaid, Other)
+    - treating_hco_id: Filter by treating HCO ID (e.g., HCO-001) — used by the
+      Ghost Radar drill-through to list patients seen at a specific HCO.
     - min_age: Minimum age filter (18-120)
     - max_age: Maximum age filter (18-120)
     - limit: Number of records to return (default: 100, max: 1000)
     - skip: Number of records to skip for pagination (default: 0)
-    
+
     Returns:
     - patients: List of patient records
     - total: Total count of patients matching filters
@@ -43,19 +46,22 @@ async def get_patients(
     try:
         db = await get_database()
         patients_collection = db["patients"]
-        
+
         # Build filter query
         filter_query = {}
-        
+
         if region:
             filter_query["region"] = region
-        
+
         if state:
             filter_query["state"] = state.upper()
-        
+
         if payer_type:
             filter_query["payer_type"] = payer_type
-        
+
+        if treating_hco_id:
+            filter_query["treating_hco_id"] = treating_hco_id
+
         if min_age is not None or max_age is not None:
             age_filter = {}
             if min_age is not None:
