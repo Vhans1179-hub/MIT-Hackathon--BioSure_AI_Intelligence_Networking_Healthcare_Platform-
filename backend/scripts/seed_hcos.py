@@ -57,50 +57,52 @@ async def seed_hcos():
         
         print(f"📊 Found {patient_count} patients in database")
         
-        # Query unique HCOs from patient data
+        # Query unique HCOs from patient data.
+        # Group by hco_id only and pick a representative name/state/region per id —
+        # patient seeding randomizes name/state per patient, so the same hco_id can
+        # appear with different (name, state, region) tuples across patients.
+        # Grouping by the whole tuple would produce duplicate hco_id rows and
+        # break the unique index on hco_id.
         print("🔍 Analyzing patient data to extract HCO information...")
         pipeline = [
             {
                 "$group": {
-                    "_id": {
-                        "hco_id": "$treating_hco_id",
-                        "name": "$treating_hco_name",
-                        "state": "$state",
-                        "region": "$region"
-                    },
+                    "_id": "$treating_hco_id",
+                    "name": {"$first": "$treating_hco_name"},
+                    "state": {"$first": "$state"},
+                    "region": {"$first": "$region"},
                     "treated_patients": {"$sum": 1}
                 }
             },
             {
-                "$sort": {"_id.hco_id": 1}
+                "$sort": {"_id": 1}
             }
         ]
-        
+
         hco_aggregates = await patients_collection.aggregate(pipeline).to_list(length=None)
-        
+
         if not hco_aggregates:
             print("❌ No HCO data found in patient records.")
             return
-        
+
         print(f"📝 Found {len(hco_aggregates)} unique HCOs in patient data")
-        
+
         # Generate HCO records with ghost patients
         print("💾 Generating HCO records with ghost patient metrics...")
         hcos = []
-        
+
         for agg in hco_aggregates:
-            hco_data = agg["_id"]
             treated_count = agg["treated_patients"]
-            
+
             # Generate ghost patients (2-5x treated count, randomized)
             multiplier = random.uniform(2.0, 5.0)
             ghost_count = int(treated_count * multiplier)
-            
+
             hco_dict = {
-                "hco_id": hco_data["hco_id"],
-                "name": hco_data["name"],
-                "state": hco_data["state"],
-                "region": hco_data["region"],
+                "hco_id": agg["_id"],
+                "name": agg["name"],
+                "state": agg["state"],
+                "region": agg["region"],
                 "treated_patients": treated_count,
                 "ghost_patients": ghost_count,
             }
