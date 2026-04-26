@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Download, Search, AlertTriangle, Building2, MapPin, Loader2, Users } from 'lucide-react';
+import { Download, Search, AlertTriangle, Building2, MapPin, Loader2, Users, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -55,6 +55,50 @@ interface Patient {
 }
 
 const ELIGIBILITY_TRIAL_ID = 'CARTITUDE-4';
+
+// Headline demo entry points — bypass the HCO drill-through and open the
+// EligibilityDrawer directly for engineered cases that map to specific stories.
+const FEATURED_CASES = [
+  {
+    patient_id: 'MM-001',
+    title: 'Textbook eligible candidate',
+    description: 'Single evaluation, clean ELIGIBLE verdict with full evidence-cited reasoning across all CARTITUDE-4 criteria.',
+    location: 'Trenton, NJ',
+    insurance: 'Medicare Advantage',
+    verdict: 'ELIGIBLE',
+    icon: CheckCircle2,
+    iconBg: 'bg-green-100',
+    iconColor: 'text-green-600',
+    badgeColor: 'bg-green-100 text-green-800',
+    cta: 'Open Current tab',
+  },
+  {
+    patient_id: 'MM-005',
+    title: 'Longitudinal patient journey',
+    description: '3 evaluations across 6 months as the patient progressed: INELIGIBLE → NEEDS_REVIEW. Click the Timeline tab.',
+    location: 'Pittsburgh, PA',
+    insurance: 'Medicare',
+    verdict: 'NEEDS_REVIEW',
+    icon: TrendingUp,
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
+    badgeColor: 'bg-yellow-100 text-yellow-800',
+    cta: 'Open Timeline tab',
+  },
+  {
+    patient_id: 'MM-014',
+    title: 'Rural routing challenge',
+    description: 'ELIGIBLE patient in Wyoming where the closest CAR-T center is out-of-network for Medicaid. Click the Routing tab.',
+    location: 'Casper, WY',
+    insurance: 'Medicaid',
+    verdict: 'ELIGIBLE',
+    icon: MapPin,
+    iconBg: 'bg-orange-100',
+    iconColor: 'text-orange-600',
+    badgeColor: 'bg-green-100 text-green-800',
+    cta: 'Open Routing tab',
+  },
+];
 
 const GhostRadar = () => {
   const [hcos, setHcos] = useState<HCO[]>([]);
@@ -250,6 +294,49 @@ const GhostRadar = () => {
         <p className="text-gray-600 mt-1">Identify likely Carvykti-eligible but untreated patients by HCO and region</p>
       </div>
       
+      {/* Featured Eligibility Cases — quick-launch demo entry points */}
+      <Card className="border-blue-200 bg-gradient-to-br from-blue-50/50 to-white">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-blue-600" />
+            Featured Eligibility Cases
+          </CardTitle>
+          <p className="text-sm text-gray-600 mt-1">
+            One-click demos. Each case opens the eligibility drawer with a different story.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {FEATURED_CASES.map((c) => {
+              const Icon = c.icon;
+              return (
+                <button
+                  key={c.patient_id}
+                  onClick={() => setOpenPatientId(c.patient_id)}
+                  className="text-left p-4 rounded-lg border border-gray-200 bg-white hover:border-blue-400 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-8 h-8 ${c.iconBg} rounded-md flex items-center justify-center`}>
+                      <Icon className={`w-4 h-4 ${c.iconColor}`} />
+                    </div>
+                    <span className="text-xs font-mono font-medium text-gray-500">{c.patient_id}</span>
+                  </div>
+                  <div className="font-semibold text-sm text-gray-900 mb-1">{c.title}</div>
+                  <p className="text-xs text-gray-600 mb-3 leading-relaxed">{c.description}</p>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className={`px-2 py-0.5 rounded font-medium ${c.badgeColor}`}>
+                      {c.verdict}
+                    </span>
+                    <span className="text-gray-500">{c.location}</span>
+                  </div>
+                  <div className="mt-2 text-[11px] text-blue-600 font-medium">→ {c.cta}</div>
+                </button>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
