@@ -388,13 +388,39 @@ export function EligibilityDrawer({
   const inclusionMet = inclusionResults.filter(c => c.result === 'MET').length;
   const exclusionTriggered = exclusionResults.filter(c => c.result === 'NOT_MET').length;
 
+  // On the Routing tab we replace the dim backdrop with a full-bleed map.
+  // On other tabs the standard click-to-close backdrop is used.
+  const showRoutingBackdrop = open && tab === 'routing';
+  const showDimBackdrop = open && tab !== 'routing';
+
   return (
     <>
-      <div
-        className={`fixed inset-0 bg-black/30 z-40 transition-opacity duration-200 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      {showDimBackdrop && (
+        <div
+          className="fixed inset-0 bg-black/30 z-40 transition-opacity duration-200"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+
+      {showRoutingBackdrop && (
+        <div className="fixed inset-0 bg-gray-100 z-40">
+          {routingResult ? (
+            <RoutingMap
+              patientHome={routingResult.patient_home}
+              centers={routingResult.centers}
+              nearestOverall={routingResult.nearest_overall}
+              selectedCenterId={selectedCenterId}
+              onSelectCenter={(id) => setSelectedCenterId(id)}
+              height="100%"
+            />
+          ) : (
+            <div className="h-full flex items-center justify-center text-gray-500 text-sm">
+              {routingLoading ? 'Loading routing recommendations…' : routingError ? `Error: ${routingError}` : 'Open routing tab to load map.'}
+            </div>
+          )}
+        </div>
+      )}
 
       <aside
         className={`fixed top-0 right-0 h-full w-full sm:w-[520px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out flex flex-col ${open ? 'translate-x-0' : 'translate-x-full'}`}
@@ -543,15 +569,7 @@ function RoutingTab({
             )}
           </div>
 
-          {/* Map */}
-          <RoutingMap
-            patientHome={result.patient_home}
-            centers={result.centers}
-            nearestOverall={result.nearest_overall}
-            selectedCenterId={selectedCenterId}
-            onSelectCenter={(id) => setSelectedCenterId(id)}
-            height={240}
-          />
+          {/* Map lives in the full-screen backdrop on this tab — list only here. */}
 
           {/* Demo punchline callout — when nearest_overall exists */}
           {result.nearest_overall && (

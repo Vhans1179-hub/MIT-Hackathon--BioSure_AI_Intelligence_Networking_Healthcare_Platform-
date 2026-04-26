@@ -106,6 +106,7 @@ export function RoutingMap({
     id: 'biosure-google-maps',
   });
 
+  const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(selectedCenterId ?? null);
 
   useEffect(() => {
@@ -125,11 +126,30 @@ export function RoutingMap({
   }, [patientHome, centers, nearestOverall]);
 
   const onMapLoad = (map: google.maps.Map) => {
-    if (allPoints.length === 0) return;
+    setMapInstance(map);
+  };
+
+  // Re-fit bounds whenever the candidate set changes (initial load, country
+  // switch, or new patient).
+  useEffect(() => {
+    if (!mapInstance || allPoints.length === 0) return;
     const bounds = new google.maps.LatLngBounds();
     allPoints.forEach((p) => bounds.extend(p));
-    map.fitBounds(bounds, { top: 60, right: 40, bottom: 40, left: 40 });
-  };
+    mapInstance.fitBounds(bounds, { top: 80, right: 80, bottom: 80, left: 80 });
+  }, [mapInstance, allPoints]);
+
+  // Pan + zoom into the selected center when the user picks one from the list.
+  // Runs after the fit-bounds effect so it wins on simultaneous updates.
+  useEffect(() => {
+    if (!mapInstance || !selectedCenterId) return;
+    const all = [...centers, ...(nearestOverall ? [nearestOverall] : [])];
+    const c = all.find((x) => x.center_id === selectedCenterId);
+    if (!c) return;
+    mapInstance.panTo({ lat: c.lat, lng: c.lon });
+    if ((mapInstance.getZoom() ?? 0) < 7) {
+      mapInstance.setZoom(7);
+    }
+  }, [mapInstance, selectedCenterId, centers, nearestOverall]);
 
   if (!GOOGLE_MAPS_API_KEY) {
     return (
