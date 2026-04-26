@@ -13,7 +13,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, MapPin, Phone, Printer, ShieldAlert, Stethoscope } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, MapPin, Phone, Printer, ShieldAlert, Stethoscope, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -102,6 +102,23 @@ const INITIAL_STATE: FormState = {
   activity: '',
   healthFlags: [],
   noHealthFlags: false,
+};
+
+// Headline demo profile: rural Wyoming patient on Medicaid, lenalidomide-
+// refractory MM. Mirrors MM-014 from the eligibility bundles so the routing
+// punchline (closest center is out-of-network) plays out in the patient view
+// the same way it does in the clinician view.
+const DEMO_PROFILE: FormState = {
+  age: '67',
+  sex: 'M',
+  zip: '82601',          // Casper, WY
+  insurance: 'Medicaid',
+  diagnosis: 'multiple_myeloma',
+  treatments: ['lenalidomide', 'bortezomib', 'daratumumab', 'dexamethasone', 'auto_sct'],
+  refractory: 'yes',
+  activity: '1',         // ECOG 1
+  healthFlags: [],
+  noHealthFlags: true,
 };
 
 // ---------------------------------------------------------------------------
@@ -447,7 +464,7 @@ export default function FindCare() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-2xl mx-auto px-4 py-6 space-y-6 pb-24 sm:pb-6">
         {/* Welcome + disclaimer */}
         <section className="space-y-3">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
@@ -466,6 +483,22 @@ export default function FindCare() {
               and the results are based only on what you tell us.
             </div>
           </div>
+
+          {/* Demo affordance — quick way to populate the form with the headline
+              rural-routing case for the live demo. Hidden visually subtle but
+              easy to find when needed. */}
+          <button
+            type="button"
+            onClick={() => {
+              setForm(DEMO_PROFILE);
+              setResults(null);
+              setError(null);
+            }}
+            className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 underline-offset-2 hover:underline"
+          >
+            <Wand2 className="w-3.5 h-3.5" />
+            Prefill demo case (rural Wyoming, Medicaid)
+          </button>
         </section>
 
         <form onSubmit={handleSubmit} className="space-y-5">
