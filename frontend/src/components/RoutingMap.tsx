@@ -153,24 +153,30 @@ export function RoutingMap({
   }, [mapInstance, allPoints, rightInsetPx]);
 
   // Pan + zoom into the selected center when the user picks one from the list.
-  // Runs after the fit-bounds effect so it wins on simultaneous updates.
-  // After centring, shift the map by `rightInsetPx / 2` so the selected
-  // marker (and its InfoWindow) lands in the visible left portion instead of
-  // sitting under the drawer.
+  // We compute the geographic center directly (instead of panTo + panBy) so
+  // the offset always lands on the final state — panTo's animation otherwise
+  // races with panBy and the marker can end up under the drawer.
+  //
+  // Math: at zoom z, the world is 256 * 2^z pixels wide. So 1 screen pixel
+  // represents `360 / (256 * 2^z)` degrees of longitude (constant across
+  // latitudes in Web Mercator). To make the chosen center appear N pixels
+  // *west* of the viewport's geometric center, we set the map center to the
+  // chosen lng + N pixels worth of degrees east.
   useEffect(() => {
     if (!mapInstance || !selectedCenterId) return;
     const all = [...centers, ...(nearestOverall ? [nearestOverall] : [])];
     const c = all.find((x) => x.center_id === selectedCenterId);
     if (!c) return;
-    mapInstance.panTo({ lat: c.lat, lng: c.lon });
-    if ((mapInstance.getZoom() ?? 0) < 7) {
-      mapInstance.setZoom(7);
+
+    const currentZoom = mapInstance.getZoom() ?? 0;
+    const targetZoom = Math.max(7, currentZoom);
+    if (currentZoom !== targetZoom) {
+      mapInstance.setZoom(targetZoom);
     }
-    if (rightInsetPx > 0) {
-      // panBy(+x, 0) shifts the map view right, which slides the just-centered
-      // point that many pixels to the LEFT in screen coordinates.
-      mapInstance.panBy(rightInsetPx / 2, 0);
-    }
+
+    const lngPerPx = 360 / (256 * Math.pow(2, targetZoom));
+    const lngOffset = rightInsetPx > 0 ? (rightInsetPx / 2) * lngPerPx : 0;
+    mapInstance.panTo({ lat: c.lat, lng: c.lon + lngOffset });
   }, [mapInstance, selectedCenterId, centers, nearestOverall, rightInsetPx]);
 
   if (!GOOGLE_MAPS_API_KEY) {
