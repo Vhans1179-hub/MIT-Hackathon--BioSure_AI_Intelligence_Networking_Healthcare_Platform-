@@ -266,25 +266,26 @@ export function RoutingMap({
         )}
       </GoogleMap>
 
-      {/* Legend */}
-      <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-sm border border-gray-200 rounded shadow px-3 py-2 text-xs space-y-1 z-10">
-        <div className="font-semibold text-gray-700 mb-1">Legend</div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: '#7C3AED' }} />
+      {/* Legend — bottom-right corner so it doesn't collide with InfoWindows
+          which typically open above their marker (i.e., toward the top). */}
+      <div className="absolute bottom-6 right-2 bg-white/95 backdrop-blur-sm border border-gray-200 rounded shadow px-2.5 py-1.5 text-[11px] space-y-1 z-10 leading-tight">
+        <div className="font-semibold text-gray-700 mb-0.5">Legend</div>
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: '#7C3AED' }} />
           Patient home
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: '#22C55E' }} />
-          Recommended (in-network)
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: '#22C55E' }} />
+          In-network
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded-full" style={{ background: '#EF4444' }} />
-          Recommended (out-of-network)
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: '#EF4444' }} />
+          Out-of-network
         </div>
         {nearestOverall && (
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-3 h-3 rounded-full" style={{ background: '#F59E0B' }} />
-            Nearest (not recommended)
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: '#F59E0B' }} />
+            Closest (not rec.)
           </div>
         )}
       </div>

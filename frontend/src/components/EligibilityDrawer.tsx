@@ -296,26 +296,43 @@ export function EligibilityDrawer({
       return () => clearTimeout(t);
     }
 
-    // Real backend mode — fetch current + history + transitions in parallel.
+    // Real backend mode. Strategy:
+    //   1. Fetch history + transitions first (cheap, instant if pre-seeded).
+    //   2. If history has entries, surface the latest as `current` — this
+    //      uses the pre-seeded evaluation and skips a costly fresh /evaluate
+    //      call (~$0.05, ~20s of OpenAI latency that the demo doesn't need).
+    //   3. Only when history is empty do we fall back to a fresh /evaluate.
     setLoading(true);
-    Promise.all([
-      fetch('/api/v1/eligibility/evaluate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          trial_id: trialId,
-          patient_bundle: patientBundle ?? { patient_id: patientId },
-        }),
-      }).then(r => r.ok ? r.json() : Promise.reject(new Error(`Evaluate ${r.status}`))),
-      fetch(`/api/v1/eligibility/history/${trialId}/${patientId}`)
-        .then(r => r.ok ? r.json() : []),
-      fetch(`/api/v1/eligibility/transitions/${trialId}/${patientId}`)
-        .then(r => r.ok ? r.json() : []),
-    ])
-      .then(([c, h, t]) => {
-        setCurrent(c);
+    const historyP = fetch(`/api/v1/eligibility/history/${trialId}/${patientId}`)
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => [] as EligibilityResponse[]);
+    const transitionsP = fetch(`/api/v1/eligibility/transitions/${trialId}/${patientId}`)
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => [] as StateTransition[]);
+
+    Promise.all([historyP, transitionsP])
+      .then(async ([h, t]: [EligibilityResponse[], StateTransition[]]) => {
         setHistory(h);
         setTransitions(t);
+
+        if (h.length > 0) {
+          // Use pre-seeded latest evaluation as current — instant.
+          setCurrent(h[h.length - 1]);
+          setLoading(false);
+          return;
+        }
+
+        // No prior history — trigger a fresh evaluation.
+        const c = await fetch('/api/v1/eligibility/evaluate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            trial_id: trialId,
+            patient_bundle: patientBundle ?? { patient_id: patientId },
+          }),
+        }).then(r => r.ok ? r.json() : Promise.reject(new Error(`Evaluate ${r.status}`)));
+        setCurrent(c);
+        setHistory([c]);
         setLoading(false);
       })
       .catch((e: Error) => {
@@ -533,7 +550,7 @@ function RoutingTab({
             nearestOverall={result.nearest_overall}
             selectedCenterId={selectedCenterId}
             onSelectCenter={(id) => setSelectedCenterId(id)}
-            height={300}
+            height={240}
           />
 
           {/* Demo punchline callout — when nearest_overall exists */}
