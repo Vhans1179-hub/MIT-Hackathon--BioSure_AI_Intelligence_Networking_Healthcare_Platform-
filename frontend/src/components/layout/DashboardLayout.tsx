@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const location = useLocation();
 
   const navItems: NavItem[] = [
-    { path: '/', label: 'Cohort Overview', icon: Users },
+    { path: '/cohort', label: 'Cohort Overview', icon: Users },
     { path: '/simulator', label: 'Contract Simulator', icon: Activity },
     { path: '/ghost-radar', label: 'Ghost Patient Radar', icon: AlertTriangle },
     { path: '/methodology', label: 'Methodology', icon: FileText },

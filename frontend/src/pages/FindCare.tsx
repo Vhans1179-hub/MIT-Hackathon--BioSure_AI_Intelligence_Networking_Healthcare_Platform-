@@ -13,7 +13,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, MapPin, Phone, Printer, ShieldAlert, Stethoscope, Wand2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Loader2, MapPin, Phone, Printer, ShieldAlert, Stethoscope, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -305,13 +305,41 @@ interface ResultsState {
   routingError: string | null;
 }
 
+// Loading messages cycled while the OpenAI evaluation is in flight. Shown
+// every ~4 seconds so a 20-25s wait feels intentional and progressive.
+const LOADING_MESSAGES = (trialId: string) => [
+  'Reading your medical history…',
+  `Comparing against ${trialId} trial criteria…`,
+  'Searching CAR-T treatment centers in your area…',
+  'Checking insurance compatibility…',
+  'Almost done…',
+];
+const LOADING_MESSAGE_INTERVAL_MS = 4000;
+
 export default function FindCare() {
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [results, setResults] = useState<ResultsState | null>(null);
   const [selectedCenterId, setSelectedCenterId] = useState<string | null>(null);
+  const [loadingMessageIdx, setLoadingMessageIdx] = useState(0);
   const resultsRef = useRef<HTMLDivElement | null>(null);
+
+  // Cycle through loading messages while submitting.
+  const loadingMessages = useMemo(
+    () => LOADING_MESSAGES(TRIAL_ID_FOR_DIAGNOSIS[form.diagnosis] ?? 'CARTITUDE-4'),
+    [form.diagnosis],
+  );
+  useEffect(() => {
+    if (!submitting) {
+      setLoadingMessageIdx(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setLoadingMessageIdx((i) => Math.min(i + 1, loadingMessages.length - 1));
+    }, LOADING_MESSAGE_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [submitting, loadingMessages.length]);
 
   // Scroll the results into view when they appear.
   useEffect(() => {
@@ -455,7 +483,7 @@ export default function FindCare() {
             </div>
           </div>
           <Link
-            to="/"
+            to="/cohort"
             className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Clinician view
@@ -514,12 +542,42 @@ export default function FindCare() {
           </div>
         </section>
 
+        {/* Loading screen — replaces the form during the OpenAI evaluation
+            so the wait feels intentional, not idle. */}
+        {submitting && (
+          <Card className="border-blue-200">
+            <CardContent className="py-10 px-6 flex flex-col items-center text-center space-y-4">
+              <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+              <div className="space-y-1">
+                <p className="text-base font-medium text-gray-900 transition-opacity duration-300">
+                  {loadingMessages[loadingMessageIdx]}
+                </p>
+                <p className="text-xs text-gray-500">
+                  This usually takes about 20 seconds.
+                </p>
+              </div>
+              {/* Tiny progress dots so the user can see we're advancing. */}
+              <div className="flex gap-1.5">
+                {loadingMessages.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      i <= loadingMessageIdx ? 'bg-blue-600' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* The form is hidden once results are shown so the verdict + map
-            become the focal point. The user can return to editing via the
-            "Edit my answers" link in the section above. */}
+            become the focal point, and also hidden while submitting so the
+            loading screen above takes over. The user can return to editing
+            via the "Edit my answers" link in the welcome section. */}
         <form
           onSubmit={handleSubmit}
-          className={`space-y-5 ${results ? 'hidden' : ''}`}
+          className={`space-y-5 ${results || submitting ? 'hidden' : ''}`}
         >
           {/* Section 1 — About you */}
           <Card>
