@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Activity, Users, AlertTriangle, FileText } from 'lucide-react';
+import { Activity, Users, AlertTriangle, FileText, Stethoscope } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DashboardLayoutProps {
@@ -33,9 +33,18 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <h1 className="text-2xl font-bold text-gray-900">BioSure</h1>
               <p className="text-sm text-gray-600">Patient Finding & Precision Health</p>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">US Market Analysis</p>
-              <p className="text-xs text-gray-500">Data through Q4 2024</p>
+            <div className="flex items-center gap-4">
+              <div className="text-right hidden sm:block">
+                <p className="text-sm font-medium text-gray-900">US Market Analysis</p>
+                <p className="text-xs text-gray-500">Data through Q4 2024</p>
+              </div>
+              <Link
+                to="/find-care"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-medium transition-colors"
+              >
+                <Stethoscope className="w-3.5 h-3.5" />
+                For patients
+              </Link>
             </div>
           </div>
         </div>

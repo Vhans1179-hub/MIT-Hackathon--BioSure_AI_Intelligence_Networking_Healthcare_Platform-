@@ -8,6 +8,7 @@ import CohortOverview from "./pages/CohortOverview";
 import ContractSimulator from "./pages/ContractSimulator";
 import GhostRadar from "./pages/GhostRadar";
 import Methodology from "./pages/Methodology";
+import FindCare from "./pages/FindCare";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,10 @@ const App = () => (
               <Methodology />
             </DashboardLayout>
           } />
+
+          {/* Patient-facing self-service — standalone, mobile-first, no dashboard nav. */}
+          <Route path="/find-care" element={<FindCare />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
