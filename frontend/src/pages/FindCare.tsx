@@ -91,19 +91,6 @@ interface FormState {
   noHealthFlags: boolean;
 }
 
-const INITIAL_STATE: FormState = {
-  age: '',
-  sex: '',
-  zip: '',
-  insurance: '',
-  diagnosis: 'multiple_myeloma',
-  treatments: [],
-  refractory: '',
-  activity: '',
-  healthFlags: [],
-  noHealthFlags: false,
-};
-
 // Headline demo profile: rural Wyoming patient on Medicaid, lenalidomide-
 // refractory MM. Mirrors MM-014 from the eligibility bundles so the routing
 // punchline (closest center is out-of-network) plays out in the patient view
@@ -120,6 +107,18 @@ const DEMO_PROFILE: FormState = {
   healthFlags: [],
   noHealthFlags: true,
 };
+
+// Form starts pre-filled with the headline demo case so judges (and you)
+// can submit immediately without typing. The "Prefill demo case" button
+// below still works as a one-click reset if any field is edited.
+const INITIAL_STATE: FormState = { ...DEMO_PROFILE };
+
+// Use this if you ever want a blank form back:
+// const BLANK_STATE: FormState = {
+//   age: '', sex: '', zip: '', insurance: '',
+//   diagnosis: 'multiple_myeloma', treatments: [],
+//   refractory: '', activity: '', healthFlags: [], noHealthFlags: false,
+// };
 
 // ---------------------------------------------------------------------------
 // API response shapes (subset of what we use)
@@ -484,24 +483,44 @@ export default function FindCare() {
             </div>
           </div>
 
-          {/* Demo affordance — quick way to populate the form with the headline
-              rural-routing case for the live demo. Hidden visually subtle but
-              easy to find when needed. */}
-          <button
-            type="button"
-            onClick={() => {
-              setForm(DEMO_PROFILE);
-              setResults(null);
-              setError(null);
-            }}
-            className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 underline-offset-2 hover:underline"
-          >
-            <Wand2 className="w-3.5 h-3.5" />
-            Prefill demo case (rural Wyoming, Medicaid)
-          </button>
+          {/* Demo affordance + edit-after-results control share this row. */}
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setForm(DEMO_PROFILE);
+                setResults(null);
+                setError(null);
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 underline-offset-2 hover:underline"
+            >
+              <Wand2 className="w-3.5 h-3.5" />
+              Prefill demo case (rural Wyoming, Medicaid)
+            </button>
+
+            {results && (
+              <button
+                type="button"
+                onClick={() => {
+                  setResults(null);
+                  setError(null);
+                }}
+                className="inline-flex items-center gap-1.5 text-xs text-gray-600 hover:text-gray-900 underline-offset-2 hover:underline"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                Edit my answers
+              </button>
+            )}
+          </div>
         </section>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        {/* The form is hidden once results are shown so the verdict + map
+            become the focal point. The user can return to editing via the
+            "Edit my answers" link in the section above. */}
+        <form
+          onSubmit={handleSubmit}
+          className={`space-y-5 ${results ? 'hidden' : ''}`}
+        >
           {/* Section 1 — About you */}
           <Card>
             <CardHeader>
