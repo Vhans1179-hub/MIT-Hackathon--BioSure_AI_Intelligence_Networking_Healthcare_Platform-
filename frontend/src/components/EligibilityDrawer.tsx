@@ -29,6 +29,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import { RoutingMap, type RankedCenter, type PatientHome } from '@/components/RoutingMap';
 
 // ---------------------------------------------------------------------------
 // Types — match the OpenAI response schema in eligibility_service.py
@@ -229,7 +230,16 @@ interface EligibilityDrawerProps {
   patientBundle?: Record<string, unknown>;
 }
 
-type TabKey = 'current' | 'timeline';
+type TabKey = 'current' | 'timeline' | 'routing';
+
+interface RoutingResult {
+  patient_id: string;
+  country: string;
+  distance_unit: string;
+  patient_home: PatientHome;
+  centers: RankedCenter[];
+  nearest_overall: RankedCenter | null;
+}
 
 export function EligibilityDrawer({
   patientId, trialId, open, onClose, patientBundle,
@@ -241,6 +251,13 @@ export function EligibilityDrawer({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  // Routing tab state
+  const [routingCountry, setRoutingCountry] = useState<'US' | 'IN'>('US');
+  const [routingResult, setRoutingResult] = useState<RoutingResult | null>(null);
+  const [routingLoading, setRoutingLoading] = useState(false);
+  const [routingError, setRoutingError] = useState<string | null>(null);
+  const [selectedCenterId, setSelectedCenterId] = useState<string | null>(null);
 
   // Close on Esc
   useEffect(() => {
@@ -307,6 +324,40 @@ export function EligibilityDrawer({
       });
   }, [open, patientId, trialId, patientBundle]);
 
+  // Fetch routing recommendations when the Routing tab is opened (and on
+  // country switch). Skips fetch in mock mode.
+  useEffect(() => {
+    if (tab !== 'routing' || !patientId) return;
+    if (USE_MOCK) {
+      setRoutingResult(null);
+      setRoutingError('Routing requires the live backend (USE_MOCK is on).');
+      return;
+    }
+    setRoutingLoading(true);
+    setRoutingError(null);
+    setSelectedCenterId(null);
+    fetch('/api/v1/routing/recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        patient_id: patientId,
+        country: routingCountry,
+        trial_id: trialId,
+        product: 'Carvykti',
+        top_n: 5,
+      }),
+    })
+      .then(r => r.ok ? r.json() : r.json().then(j => Promise.reject(new Error(j.detail || `Routing ${r.status}`))))
+      .then((data: RoutingResult) => {
+        setRoutingResult(data);
+        setRoutingLoading(false);
+      })
+      .catch((e: Error) => {
+        setRoutingError(e.message);
+        setRoutingLoading(false);
+      });
+  }, [tab, patientId, trialId, routingCountry]);
+
   const toggleExpand = (id: string) => {
     setExpanded(prev => {
       const next = new Set(prev);
@@ -366,6 +417,11 @@ export function EligibilityDrawer({
                   </span>
                 )}
               </TabButton>
+              {current && current.final_determination !== 'INELIGIBLE' && (
+                <TabButton active={tab === 'routing'} onClick={() => setTab('routing')}>
+                  Routing
+                </TabButton>
+              )}
             </div>
           )}
         </div>
@@ -390,9 +446,169 @@ export function EligibilityDrawer({
           {current && !loading && !error && tab === 'timeline' && (
             <TimelineTab history={history} transitions={transitions} />
           )}
+
+          {current && !loading && !error && tab === 'routing' && (
+            <RoutingTab
+              country={routingCountry}
+              setCountry={setRoutingCountry}
+              loading={routingLoading}
+              error={routingError}
+              result={routingResult}
+              selectedCenterId={selectedCenterId}
+              setSelectedCenterId={setSelectedCenterId}
+            />
+          )}
         </div>
       </aside>
     </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Routing tab
+// ---------------------------------------------------------------------------
+
+interface RoutingTabProps {
+  country: 'US' | 'IN';
+  setCountry: (c: 'US' | 'IN') => void;
+  loading: boolean;
+  error: string | null;
+  result: RoutingResult | null;
+  selectedCenterId: string | null;
+  setSelectedCenterId: (id: string | null) => void;
+}
+
+function RoutingTab({
+  country, setCountry, loading, error, result, selectedCenterId, setSelectedCenterId,
+}: RoutingTabProps) {
+  return (
+    <div className="px-5 py-4 space-y-4">
+      {/* Country switcher */}
+      <div className="flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-wide text-gray-500">
+          Treatment center routing
+        </div>
+        <div className="inline-flex rounded-md border border-gray-200 overflow-hidden text-xs">
+          <button
+            onClick={() => setCountry('US')}
+            className={`px-3 py-1 ${country === 'US' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+          >
+            🇺🇸 US
+          </button>
+          <button
+            onClick={() => setCountry('IN')}
+            className={`px-3 py-1 border-l border-gray-200 ${country === 'IN' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+          >
+            🇮🇳 India
+          </button>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="py-8 text-center text-sm text-gray-500">Routing to nearest in-network centers…</div>
+      )}
+
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded-md">
+          {error}
+        </div>
+      )}
+
+      {result && !loading && !error && (
+        <>
+          {/* Patient context bar */}
+          <div className="bg-gray-50 border border-gray-200 rounded-md px-3 py-2 text-xs text-gray-700">
+            <span className="font-medium">{result.patient_id}</span>
+            {' · '}
+            home: {result.patient_home.city}, {result.patient_home.state}
+            {result.patient_home.insurance_type && (
+              <>{' · '}<span className="text-gray-600">{result.patient_home.insurance_type}</span></>
+            )}
+          </div>
+
+          {/* Map */}
+          <RoutingMap
+            patientHome={result.patient_home}
+            centers={result.centers}
+            nearestOverall={result.nearest_overall}
+            selectedCenterId={selectedCenterId}
+            onSelectCenter={(id) => setSelectedCenterId(id)}
+            height={300}
+          />
+
+          {/* Demo punchline callout — when nearest_overall exists */}
+          {result.nearest_overall && (
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-md text-xs text-amber-900 leading-relaxed">
+              <div className="font-medium mb-1">⚠ Closest center is not the recommended one</div>
+              <span className="text-amber-800">
+                <strong>{result.nearest_overall.name}</strong> in {result.nearest_overall.city}, {result.nearest_overall.state}
+                {' '}is the geographically closest option ({result.nearest_overall.distance} {result.nearest_overall.distance_unit}),
+                but it's <strong>out-of-network</strong> for this patient. The recommendation below routes to the closest in-network alternative.
+              </span>
+            </div>
+          )}
+
+          {/* Ranked centers list */}
+          <div>
+            <div className="text-[11px] uppercase tracking-wide text-gray-500 mb-2">
+              Recommended centers ({result.centers.length})
+            </div>
+            <ul className="space-y-2">
+              {result.centers.map((c) => (
+                <li
+                  key={c.center_id}
+                  onClick={() => setSelectedCenterId(c.center_id)}
+                  className={`p-3 border rounded-md cursor-pointer transition-colors ${
+                    selectedCenterId === c.center_id
+                      ? 'border-blue-400 bg-blue-50'
+                      : 'border-gray-200 bg-white hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xs font-medium text-blue-700">#{c.rank}</span>
+                        <span className="text-sm font-medium text-gray-900 truncate">{c.name}</span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5">
+                        {c.city}, {c.state} · {c.distance} {c.distance_unit} · ~{c.drive_hours_estimate}h drive
+                      </div>
+                      <div className="flex items-center gap-2 mt-1.5 text-[11px]">
+                        {c.in_network ? (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-green-100 text-green-800">
+                            ✓ In-network
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-red-100 text-red-800">
+                            ✗ Out-of-network
+                          </span>
+                        )}
+                        {c.on_trial && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">
+                            Trial site
+                          </span>
+                        )}
+                        {c.current_wait_weeks !== undefined && (
+                          <span className="text-gray-500">~{c.current_wait_weeks}wk wait</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-xs text-gray-400">score</div>
+                      <div className="text-sm font-semibold text-gray-700">{c.scores.composite.toFixed(2)}</div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="text-[10px] text-gray-400 px-1 pt-1">
+            Score = 0.40 × clinical match + 0.35 × distance + 0.25 × insurance compatibility.
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

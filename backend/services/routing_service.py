@@ -47,6 +47,8 @@ logger = logging.getLogger(__name__)
 
 SERVICE_DIR = Path(__file__).parent
 ROUTING_DIR = SERVICE_DIR.parent / "data" / "routing"
+ELIGIBILITY_DIR = SERVICE_DIR.parent / "data" / "eligibility"
+PATIENT_BUNDLE_FILES = ["myeloma_patients.json", "cart_patients.json"]
 
 WEIGHT_DISTANCE = 0.35
 WEIGHT_INSURANCE = 0.25
@@ -76,6 +78,30 @@ class RoutingService:
 
     def __init__(self) -> None:
         self._centers_by_country: dict[str, dict[str, Any]] = {}
+        self._patient_bundles: dict[str, dict[str, Any]] | None = None
+
+    def _load_patient_bundles(self) -> dict[str, dict[str, Any]]:
+        """Lazy-load all eligibility patient bundles, indexed by patient_id."""
+        if self._patient_bundles is not None:
+            return self._patient_bundles
+        bundles: dict[str, dict[str, Any]] = {}
+        for fname in PATIENT_BUNDLE_FILES:
+            path = ELIGIBILITY_DIR / fname
+            if not path.exists():
+                continue
+            with path.open() as f:
+                data = json.load(f)
+            for p in data.get("patients", []):
+                pid = p.get("patient_id")
+                if pid:
+                    bundles[pid] = p
+        self._patient_bundles = bundles
+        logger.info("Loaded %d patient bundles for routing lookup", len(bundles))
+        return bundles
+
+    def get_patient_bundle(self, patient_id: str) -> dict[str, Any] | None:
+        """Return the patient bundle for a given ID, or None if not found."""
+        return self._load_patient_bundles().get(patient_id)
 
     def _load_country(self, country: str) -> dict[str, Any]:
         country = country.upper()

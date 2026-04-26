@@ -39,10 +39,15 @@ router = APIRouter(prefix="/routing", tags=["routing"])
 
 
 class RecommendRequest(BaseModel):
-    patient_bundle: dict[str, Any] = Field(
-        ...,
-        description="Patient bundle including home_location with lat/lon "
-                    "and insurance_type.",
+    patient_bundle: Optional[dict[str, Any]] = Field(
+        default=None,
+        description="Full patient bundle including home_location with lat/lon "
+                    "and insurance_type. Provide this OR patient_id.",
+    )
+    patient_id: Optional[str] = Field(
+        default=None,
+        description="Look up the patient bundle by ID from the eligibility "
+                    "patient files (e.g., 'MM-014'). Provide this OR patient_bundle.",
     )
     country: str = Field(default="US", description="ISO-2 country code (US, IN).")
     trial_id: Optional[str] = Field(
@@ -102,9 +107,23 @@ async def recommend(
     closest center when it doesn't make the top_n (typical for rural patients
     whose closest center is out-of-network).
     """
+    bundle = req.patient_bundle
+    if bundle is None:
+        if not req.patient_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Either patient_bundle or patient_id must be provided.",
+            )
+        bundle = svc.get_patient_bundle(req.patient_id)
+        if bundle is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Patient '{req.patient_id}' not found in eligibility bundles.",
+            )
+
     try:
         return svc.recommend_centers(
-            patient_bundle=req.patient_bundle,
+            patient_bundle=bundle,
             country=req.country,
             trial_id=req.trial_id,
             product=req.product,
