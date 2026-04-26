@@ -413,6 +413,7 @@ export function EligibilityDrawer({
               selectedCenterId={selectedCenterId}
               onSelectCenter={(id) => setSelectedCenterId(id)}
               height="100%"
+              rightInsetPx={520}
             />
           ) : (
             <div className="h-full flex items-center justify-center text-gray-500 text-sm">

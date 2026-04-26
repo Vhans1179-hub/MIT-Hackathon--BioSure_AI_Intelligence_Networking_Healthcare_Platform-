@@ -64,6 +64,13 @@ interface RoutingMapProps {
   selectedCenterId?: string | null;
   onSelectCenter?: (centerId: string) => void;
   height?: number | string;
+  /**
+   * Pixels on the right side of the map element that are visually occluded
+   * by an overlay (e.g., a side drawer). When set, fit-bounds keeps markers
+   * out of that strip and pan-to-center shifts the active point into the
+   * visible left portion. Defaults to 0.
+   */
+  rightInsetPx?: number;
 }
 
 const DEFAULT_CENTER_BY_COUNTRY: Record<string, { lat: number; lng: number; zoom: number }> = {
@@ -100,6 +107,7 @@ export function RoutingMap({
   selectedCenterId,
   onSelectCenter,
   height = 360,
+  rightInsetPx = 0,
 }: RoutingMapProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -130,16 +138,25 @@ export function RoutingMap({
   };
 
   // Re-fit bounds whenever the candidate set changes (initial load, country
-  // switch, or new patient).
+  // switch, or new patient). Inflate the right padding by `rightInsetPx` so
+  // markers stay out of the area covered by the side drawer.
   useEffect(() => {
     if (!mapInstance || allPoints.length === 0) return;
     const bounds = new google.maps.LatLngBounds();
     allPoints.forEach((p) => bounds.extend(p));
-    mapInstance.fitBounds(bounds, { top: 80, right: 80, bottom: 80, left: 80 });
-  }, [mapInstance, allPoints]);
+    mapInstance.fitBounds(bounds, {
+      top: 80,
+      right: 80 + rightInsetPx,
+      bottom: 80,
+      left: 80,
+    });
+  }, [mapInstance, allPoints, rightInsetPx]);
 
   // Pan + zoom into the selected center when the user picks one from the list.
   // Runs after the fit-bounds effect so it wins on simultaneous updates.
+  // After centring, shift the map by `rightInsetPx / 2` so the selected
+  // marker (and its InfoWindow) lands in the visible left portion instead of
+  // sitting under the drawer.
   useEffect(() => {
     if (!mapInstance || !selectedCenterId) return;
     const all = [...centers, ...(nearestOverall ? [nearestOverall] : [])];
@@ -149,7 +166,12 @@ export function RoutingMap({
     if ((mapInstance.getZoom() ?? 0) < 7) {
       mapInstance.setZoom(7);
     }
-  }, [mapInstance, selectedCenterId, centers, nearestOverall]);
+    if (rightInsetPx > 0) {
+      // panBy(+x, 0) shifts the map view right, which slides the just-centered
+      // point that many pixels to the LEFT in screen coordinates.
+      mapInstance.panBy(rightInsetPx / 2, 0);
+    }
+  }, [mapInstance, selectedCenterId, centers, nearestOverall, rightInsetPx]);
 
   if (!GOOGLE_MAPS_API_KEY) {
     return (
