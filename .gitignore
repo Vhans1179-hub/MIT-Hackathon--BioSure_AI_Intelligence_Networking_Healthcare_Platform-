@@ -14,8 +14,6 @@ env/
 ENV/
 
 # Environment variables
-.env
-.env.local
 
 # IDEs
 .vscode/
@@ -47,3 +45,4 @@ htmlcov/
 
 # Local scratchpad / staging area for downloaded assets before placement
 docs/
+config.bat

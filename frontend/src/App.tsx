@@ -20,7 +20,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={
+          {/* Patient self-service is the front door of the app — bare URL
+              lands here so a patient (or a hackathon judge) sees the demo
+              immediately without navigating anywhere. */}
+          <Route path="/" element={<FindCare />} />
+          <Route path="/find-care" element={<FindCare />} />
+
+          {/* Clinician / operator dashboard lives under /cohort. The "For
+              patients" link in the dashboard header points back to /find-care. */}
+          <Route path="/cohort" element={
             <DashboardLayout>
               <CohortOverview />
             </DashboardLayout>
@@ -40,9 +48,6 @@ const App = () => (
               <Methodology />
             </DashboardLayout>
           } />
-
-          {/* Patient-facing self-service — standalone, mobile-first, no dashboard nav. */}
-          <Route path="/find-care" element={<FindCare />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
